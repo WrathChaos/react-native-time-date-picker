@@ -1,14 +1,19 @@
 import { useRef, useState } from "react";
-import { Animated, Easing } from "react-native";
+import { Animated, Easing, StyleProp, ViewStyle } from "react-native";
 import moment from "moment";
 import * as translations from "./translations";
 import { ITranslation } from "./translations";
+import {
+  FORMATTED_DATE,
+  NEXT,
+  SELECTED_FORMAT,
+  MINUTE_INTERVAL_ARRAY,
+} from "./defaults.constants";
+import PropTypes from "prop-types";
 
-const m = moment();
-
-export interface IData {
-  minimumDate: number;
-  maximumDate: number;
+export interface IMinMaxDates {
+  minimumDate?: number;
+  maximumDate?: number;
 }
 
 export interface IConfig {
@@ -18,25 +23,54 @@ export interface IConfig {
   translation: ITranslation;
 }
 
-export enum modes {
+export enum Modes {
   time = "time-picker",
   date = "date-picker",
+  monthYear = "month-year-picker",
+  calendar = "calendar-picker",
 }
 
-export interface IProps extends IData {
-  mode: modes;
-  configs: IConfig;
-  translation: string;
+export interface ITimeDatePickerProps {
+  mode?: Modes;
+  translation?: string;
+  configs?: IConfig;
+  style?: StyleProp<ViewStyle>;
+  options?: IOptions;
+  currentDate?: number;
+  selectedDate?: number;
+  minimumDate?: number;
+  maximumDate?: number;
+  selectorStartingYear?: number;
+  selectorEndingYear?: number;
+  disableDateChange?: boolean;
+  minuteInterval?: typeof MINUTE_INTERVAL_ARRAY;
+  onSelectedChange?: () => null;
+  onMonthYearChange?: () => null;
+  onTimeChange?: () => null;
+  onDateChange?: () => null;
 }
 
-const TIME_PICKER = "time-picker";
-const DATE_PICKER = "date-picker";
+export interface IOptions {
+  backgroundColor: string;
+  textHeaderColor: string;
+  textDefaultColor: string;
+  selectedTextColor: string;
+  mainColor: string;
+  textSecondaryColor: string;
+  borderColor: string;
+  defaultFont: string;
+  headerFont: string;
+  textFontSize: number;
+  textHeaderFontSize: number;
+  headerAnimationDistance: number;
+  daysAnimationDistance: number;
+}
 
 class utils {
-  data: IData;
+  minMaxDates: IMinMaxDates;
   config: IConfig;
 
-  constructor(props: IProps) {
+  constructor(props: ITimeDatePickerProps) {
     const {
       minimumDate,
       maximumDate,
@@ -44,27 +78,27 @@ class utils {
       configs,
       translation = "en",
     } = props;
-    this.data = {
+    this.minMaxDates = {
       minimumDate,
       maximumDate,
     };
     this.config = translations[translation];
     this.config = { ...this.config, ...configs };
-    if (mode === TIME_PICKER || mode === DATE_PICKER) {
+    if (mode === Modes.time || mode === Modes.date) {
       this.config.selectedFormat =
         this.config.dateFormat + " " + this.config.timeFormat;
     }
   }
 
-  getFormatted = (date, formatName = "selectedFormat") =>
+  getFormatted = (date, formatName = SELECTED_FORMAT) =>
     date.format(this.config[formatName]);
 
-  getFormattedDate = (date = new Date(), format = "YYYY/MM/DD") =>
+  getFormattedDate = (date = new Date(), format = FORMATTED_DATE) =>
     moment(date).format(format);
 
   getTime = (time: number) => this.getDate(time).format(this.config.timeFormat);
 
-  getToday = () => this.getFormatted(m, "dateFormat");
+  getToday = () => this.getFormatted(moment, "dateFormat");
 
   getMonthName = (month: number) => this.config.translation.monthNames[month];
 
@@ -73,7 +107,7 @@ class utils {
     return value.replace(/[۰-۹]/g, (w) => w.charCodeAt(0) - charCodeZero);
   };
 
-  getDate = (time: number) => moment(time, this.config.selectedFormat);
+  getDate = (time?: number) => moment(time, this.config.selectedFormat);
 
   getMonthYearText = (time: number) => {
     const date = this.getDate(time);
@@ -83,7 +117,7 @@ class utils {
   };
 
   checkMonthDisabled = (time: number) => {
-    const { minimumDate, maximumDate } = this.data;
+    const { minimumDate, maximumDate } = this.minMaxDates;
     const date = this.getDate(time);
     let disabled = false;
     if (minimumDate) {
@@ -105,7 +139,7 @@ class utils {
   };
 
   checkYearDisabled = (year: number, next: boolean) => {
-    const { minimumDate, maximumDate } = this.data;
+    const { minimumDate, maximumDate } = this.minMaxDates;
     const y = this.getDate(next ? maximumDate : minimumDate).year();
     return next ? year >= y : year <= y;
   };
@@ -117,7 +151,7 @@ class utils {
   };
 
   validYear = (time: number, year: number) => {
-    const { minimumDate, maximumDate } = this.data;
+    const { minimumDate, maximumDate } = this.minMaxDates;
     const date = this.getDate(time).year(year);
     let validDate = this.getFormatted(date);
     if (minimumDate && date < this.getDate(minimumDate)) {
@@ -130,7 +164,7 @@ class utils {
   };
 
   getMonthDays = (time: number) => {
-    const { minimumDate, maximumDate } = this.data;
+    const { minimumDate, maximumDate } = this.minMaxDates;
     let date = this.getDate(time);
     const currentMonthDays = date.daysInMonth();
     const firstDay = date.date(1);
@@ -188,7 +222,7 @@ class utils {
         {
           translateX: monthYearAnimation.interpolate({
             inputRange: [0, 1],
-            outputRange: [0, changeWay === "NEXT" ? -distance : distance],
+            outputRange: [0, changeWay === NEXT ? -distance : distance],
           }),
         },
       ],
@@ -200,7 +234,7 @@ class utils {
         {
           translateX: monthYearAnimation.interpolate({
             inputRange: [0, 1],
-            outputRange: [changeWay === "NEXT" ? distance : -distance, 0],
+            outputRange: [changeWay === NEXT ? distance : -distance, 0],
           }),
         },
       ],

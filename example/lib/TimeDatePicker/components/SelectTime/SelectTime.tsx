@@ -14,6 +14,7 @@ import { Modes } from "../../../utils";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
+// @ts-ignore
 const TimeScroller = ({ title, data, onChange }) => {
   const { options, utils } = useCalendar();
   const [itemSize, setItemSize] = useState(0);
@@ -39,17 +40,19 @@ const TimeScroller = ({ title, data, onChange }) => {
     };
   }, [scrollAnimatedValue]);
 
+  // @ts-ignore
   const changeItemWidth = ({ nativeEvent }) => {
     const { width } = nativeEvent.layout;
     !itemSize && setItemSize(width / 5);
   };
 
+  // @ts-ignore
   const renderItem = ({ item, index }) => {
-    const makeAnimated = (a, b, c) => {
+    const makeAnimated = (a: number, b: number, c: number) => {
       return {
-        inputRange: [...data.map((_, i) => i * itemSize)],
+        inputRange: [...data.map((_: any, i: number) => i * itemSize)],
         outputRange: [
-          ...data.map((_, i) => {
+          ...data.map((_: any, i: number) => {
             const center = i + 2;
             if (center === index) {
               return a;
@@ -85,7 +88,7 @@ const TimeScroller = ({ title, data, onChange }) => {
       >
         <Text style={style.listItemText}>
           {utils.getConvertedNumber(
-            String(item).length === 1 ? "0" + item : item,
+            String(item).length === 1 ? "0" + String(item) : String(item),
           )}
         </Text>
       </Animated.View>
@@ -134,7 +137,7 @@ const SelectTime = () => {
     options,
     state,
     utils,
-    minuteInterval,
+    minuteInterval = 1,
     mode,
     onTimeChange,
   } = useCalendar();
@@ -209,7 +212,7 @@ const SelectTime = () => {
       <TimeScroller
         title={utils.config.hour}
         data={Array.from({ length: 24 }, (x, i) => i)}
-        onChange={(hour) => setTime({ ...time, hour })}
+        onChange={(hour: number) => setTime({ ...time, hour })}
       />
       <TimeScroller
         title={utils.config.minute}

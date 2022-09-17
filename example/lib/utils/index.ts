@@ -34,7 +34,7 @@ export interface ITimeDatePickerProps extends IMinMaxDates {
   selectorStartingYear: number;
   selectorEndingYear: number;
   disableDateChange?: boolean;
-  minuteInterval: number;
+  minuteInterval?: number;
   onSelectedChange: (selectedDay: number[]) => void;
   onMonthYearChange: (monthYear: string) => void;
   onTimeChange: (time: string) => void;
@@ -104,10 +104,13 @@ class utils {
   getMonthName = (month: number) => this.config.monthNames[month];
 
   getConvertedNumber = (value: string) => {
-    const charCodeZero = "۰".charCodeAt(0);
-    return value.replace(/[۰-۹]/g, (w) =>
-      String(w.charCodeAt(0) - charCodeZero),
-    );
+    if (value && typeof value === "string") {
+      const charCodeZero = "۰".charCodeAt(0);
+      return value.replace(/[۰-۹]/g, (w) =>
+        String(w.charCodeAt(0) - charCodeZero),
+      );
+    }
+    return "";
   };
 
   getDate = (time?: string) => moment(time, this.config.selectedFormat);

@@ -1,6 +1,7 @@
 import React from "react";
-import { View, StyleProp, ViewStyle } from "react-native";
+import { StyleProp, View, ViewStyle } from "react-native";
 import { TimeDatePicker } from "./lib/TimeDatePicker/TimeDatePicker";
+import { Modes } from "./lib/utils";
 
 type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
 
@@ -12,10 +13,10 @@ const App: React.FC<AppProps> = ({ style }) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TimeDatePicker
-        minuteInterval={60}
         onMonthYearChange={() => {}}
         onSelectedChange={() => {}}
         onTimeChange={() => {}}
+        mode={Modes.date}
         options={null}
         selectorEndingYear={() => {}}
         selectorStartingYear={() => {}}

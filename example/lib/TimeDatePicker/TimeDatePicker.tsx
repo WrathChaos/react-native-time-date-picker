@@ -77,8 +77,6 @@ const TimeDatePicker: React.FC<ITimeDatePickerProps> = (props) => {
     }),
   };
 
-  console.log("ContextValue: ", contextValue);
-
   const [minHeight, setMinHeight] = useState(300);
   const _style = styles(contextValue.options);
 

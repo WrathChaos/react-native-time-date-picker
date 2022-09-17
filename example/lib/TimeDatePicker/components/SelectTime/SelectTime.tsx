@@ -108,9 +108,6 @@ const TimeScroller = ({ title, data, onChange }) => {
         data={I18nManager.isRTL ? data.reverse() : data}
         onMomentumScrollEnd={() => {
           const index = Math.round(active.current / itemSize);
-          console.log("active.current: ", active.current);
-          console.log("itemSize: ", itemSize);
-          console.log(data);
           onChange(data[index + 2]);
         }}
         keyExtractor={(_, i) => String(i)}
@@ -211,7 +208,6 @@ const SelectTime = () => {
         title={utils.config.hour}
         data={Array.from({ length: 24 }, (x, i) => i)}
         onChange={(hour: number) => {
-          console.log("HOUR: ", hour);
           setTime({ ...time, hour });
         }}
       />

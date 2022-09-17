@@ -13,9 +13,15 @@ const App: React.FC<AppProps> = ({ style }) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TimeDatePicker
-        onMonthYearChange={() => {}}
-        onSelectedChange={() => {}}
-        onTimeChange={() => {}}
+        onMonthYearChange={(month) => {
+          console.log("month: ", month);
+        }}
+        onSelectedChange={(selected) => {
+          console.log("selected: ", selected);
+        }}
+        onTimeChange={(time) => {
+          console.log("time: ", time);
+        }}
         mode={Modes.date}
       />
     </View>

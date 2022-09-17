@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
     disableDateChange ||
     (minimumDate &&
       utils.checkArrowMonthDisabled(mainState.activeDate, true)) ||
-    true;
+    false;
   const nextDisable =
     disableDateChange ||
     (maximumDate &&

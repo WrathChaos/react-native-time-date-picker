@@ -1,33 +1,30 @@
 import React, { useState, useMemo } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-import { useCalendar } from "../TimeDatePicker";
+import { useCalendar } from "../../TimeDatePicker";
 
-const Days = () => {
+const Days = (factory, deps) => {
   const { options, state, utils, onDateChange } = useCalendar();
   const [mainState, setMainState] = state;
   const [itemSize, setItemSize] = useState(0);
   const style = styles(options);
-  const days = useMemo(() => utils.getMonthDays(mainState.activeDate));
+  const days = useMemo(() => utils.getMonthDays(mainState.activeDate), deps);
 
   const onSelectDay = (date) => {
     setMainState({
       type: "set",
       selectedDate: date,
     });
-    onDateChange(utils.getFormated(utils.getDate(date), "dateFormat"));
+    onDateChange?.(utils.getFormatted(utils.getDate(date), "dateFormat"));
   };
 
   const changeItemHeight = ({ nativeEvent }) => {
     const { width } = nativeEvent.layout;
-    !itemSize && setItemSize((width / 7).toFixed(2) * 1 - 0.5);
+    !itemSize && setItemSize(width / 7 - 0.5);
   };
 
   return (
-    <View
-      style={[style.container, utils.flexDirection]}
-      onLayout={changeItemHeight}
-    >
+    <View style={style.container} onLayout={changeItemHeight}>
       {days.map((day, n) => (
         <View
           key={n}

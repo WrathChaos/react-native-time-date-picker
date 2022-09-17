@@ -33,8 +33,13 @@ const reducer = (state, action) => {
   }
 };
 
+interface IContextValueProps extends ITimeDatePickerProps {
+  utils: utils;
+  state: any;
+}
+
 // @ts-ignore
-const CalendarContext = createContext<ITimeDatePickerProps>();
+const CalendarContext = createContext<IContextValueProps>();
 
 const useCalendar = () => {
   return useContext(CalendarContext);
@@ -58,10 +63,7 @@ const TimeDatePicker: React.FC<ITimeDatePickerProps> = (props) => {
     ...rest
   } = props;
   const calendarUtils = new utils(props);
-  interface IContextValueProps extends ITimeDatePickerProps {
-    utils: utils;
-    state: any;
-  }
+
   const contextValue: IContextValueProps = {
     ...rest,
     options: { ...options, ...rest.options },

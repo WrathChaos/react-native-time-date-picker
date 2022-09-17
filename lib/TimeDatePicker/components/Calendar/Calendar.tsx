@@ -34,8 +34,8 @@ const Calendar: React.FC<CalendarProps> = ({ calendarStyle }) => {
   return (
     <View style={style.container}>
       <Header changeMonth={changeMonthAnimation} />
-      <View style={[style.daysName, utils.flexDirection]}>
-        {utils.config.dayNamesShort.map((item) => (
+      <View style={style.daysName}>
+        {utils.config.translation.dayNamesShort.map((item) => (
           <Text key={item} style={style.daysNameText}>
             {item}
           </Text>

@@ -6,11 +6,11 @@ import { IOptions, ITimeDatePickerProps, Modes, utils } from "../utils";
 
 export const defaultOptions = {
   backgroundColor: "#fff",
-  textHeaderColor: "#212c35",
-  textDefaultColor: "#2d4150",
+  textHeaderColor: "#241523",
+  textDefaultColor: "#432d50",
   selectedTextColor: "#fff",
   mainColor: "#aa7ff9",
-  textSecondaryColor: "#7a92a5",
+  textSecondaryColor: "#967aa5",
   borderColor: "rgba(53, 33, 52, 0.1)",
   defaultFont: "System",
   headerFont: "System",

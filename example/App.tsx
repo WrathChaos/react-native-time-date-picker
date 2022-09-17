@@ -1,15 +1,11 @@
 import React from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
+import { View } from "react-native";
 import { TimeDatePicker } from "./lib/TimeDatePicker/TimeDatePicker";
 import { Modes } from "./lib/utils";
 
-type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
+interface AppProps {}
 
-interface AppProps {
-  style?: CustomStyleProp;
-}
-
-const App: React.FC<AppProps> = ({ style }) => {
+const App: React.FC<AppProps> = () => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TimeDatePicker

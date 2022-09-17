@@ -26,7 +26,7 @@ const Calendar: React.FC<CalendarProps> = ({ calendarStyle }) => {
     onSelectedChange,
   } = useCalendar();
   const [mainState] = state;
-  const style = styles([options, calendarStyle]);
+  const style = styles(options);
   const [{ shownAnimation }, changeMonthAnimation] = utils.useMonthAnimation(
     mainState.activeDate,
     options.daysAnimationDistance,
@@ -37,7 +37,7 @@ const Calendar: React.FC<CalendarProps> = ({ calendarStyle }) => {
   }, [mainState.selectedDate, onSelectedChange]);
 
   return (
-    <View style={style.container}>
+    <View style={[style.container, calendarStyle]}>
       <Header changeMonth={changeMonthAnimation} />
       <View style={[style.daysName, { flexDirection: "row" }]}>
         {utils.config.dayNamesShort.map((item) => (

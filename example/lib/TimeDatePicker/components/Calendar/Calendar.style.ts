@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
+import { IOptions } from "../../../utils";
 
-export const styles = (theme) =>
+export const styles = (theme: IOptions) =>
   StyleSheet.create({
     container: {
       flexDirection: "column",

@@ -9,34 +9,29 @@ import {
   View,
 } from "react-native";
 import { styles } from "./SelectTime.style";
-import { useCalendar } from "../../TimeDatePicker";
+import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 import { Modes } from "../../../utils";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 // @ts-ignore
 const TimeScroller = ({ title, data, onChange }) => {
-  const { options, utils } = useCalendar();
+  const { options = defaultOptions, utils } = useCalendar();
   const [itemSize, setItemSize] = useState(0);
   const style = styles(options);
   const scrollAnimatedValue = useRef(new Animated.Value(0)).current;
-  const scrollListener = useRef();
+  const scrollListener = useRef("0");
   const active = useRef(0);
   data = ["", "", ...data, "", ""];
 
   useEffect(() => {
-    if (scrollListener.current) {
-      // @ts-ignore
-      clearInterval(scrollListener.current);
-      // @ts-ignore
-      scrollListener.current = scrollAnimatedValue.addListener(
-        ({ value }) => (active.current = value),
-      );
-    }
+    scrollListener.current && clearInterval(Number(scrollListener.current));
+    scrollListener.current = scrollAnimatedValue.addListener(
+      ({ value }) => (active.current = value),
+    );
 
     return () => {
-      // @ts-ignore
-      clearInterval(scrollListener.current);
+      clearInterval(Number(scrollListener.current));
     };
   }, [scrollAnimatedValue]);
 
@@ -113,6 +108,9 @@ const TimeScroller = ({ title, data, onChange }) => {
         data={I18nManager.isRTL ? data.reverse() : data}
         onMomentumScrollEnd={() => {
           const index = Math.round(active.current / itemSize);
+          console.log("active.current: ", active.current);
+          console.log("itemSize: ", itemSize);
+          console.log(data);
           onChange(data[index + 2]);
         }}
         keyExtractor={(_, i) => String(i)}
@@ -134,7 +132,7 @@ const TimeScroller = ({ title, data, onChange }) => {
 
 const SelectTime = () => {
   const {
-    options,
+    options = defaultOptions,
     state,
     utils,
     minuteInterval = 1,
@@ -212,7 +210,10 @@ const SelectTime = () => {
       <TimeScroller
         title={utils.config.hour}
         data={Array.from({ length: 24 }, (x, i) => i)}
-        onChange={(hour: number) => setTime({ ...time, hour })}
+        onChange={(hour: number) => {
+          console.log("HOUR: ", hour);
+          setTime({ ...time, hour });
+        }}
       />
       <TimeScroller
         title={utils.config.minute}

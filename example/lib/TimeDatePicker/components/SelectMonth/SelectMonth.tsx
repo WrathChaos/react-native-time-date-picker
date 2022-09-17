@@ -12,16 +12,16 @@ import {
 import moment from "moment";
 
 import { styles } from "./SelectMonth.style";
-import { useCalendar } from "../../TimeDatePicker";
+import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 import { Modes } from "../../../utils";
 
 const SelectMonth = () => {
   const {
-    options,
+    options = defaultOptions,
     state,
     utils,
-    selectorStartingYear,
-    selectorEndingYear,
+    selectorStartingYear = 0,
+    selectorEndingYear = 3000,
     mode,
     minimumDate,
     maximumDate,

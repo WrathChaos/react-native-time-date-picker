@@ -1,10 +1,15 @@
 import React, { useState, useMemo } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./Days.style";
-import { useCalendar } from "../../TimeDatePicker";
+import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 
 const Days = () => {
-  const { options, state, utils, onDateChange } = useCalendar();
+  const {
+    state,
+    utils,
+    options = defaultOptions,
+    onDateChange,
+  } = useCalendar();
   const [mainState, setMainState] = state;
   const [itemSize, setItemSize] = useState(0);
   const style = styles(options);

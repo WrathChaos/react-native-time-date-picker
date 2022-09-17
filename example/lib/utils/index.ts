@@ -5,6 +5,8 @@ import * as translations from "./translations";
 import { ITranslation } from "./translations";
 import { FORMATTED_DATE, NEXT, SELECTED_FORMAT } from "./defaults.constants";
 
+const m = moment();
+
 export interface IMinMaxDates {
   minimumDate?: string;
   maximumDate?: string;
@@ -28,11 +30,11 @@ export interface ITimeDatePickerProps extends IMinMaxDates {
   translation?: string;
   configs?: IConfig;
   style?: StyleProp<ViewStyle>;
-  options: IOptions;
+  options?: IOptions;
   currentDate?: string;
   selectedDate?: string;
-  selectorStartingYear: number;
-  selectorEndingYear: number;
+  selectorStartingYear?: number;
+  selectorEndingYear?: number;
   disableDateChange?: boolean;
   minuteInterval?: number;
   onSelectedChange: (selectedDay: number[]) => void;
@@ -99,7 +101,7 @@ class utils {
 
   getTime = (time: string) => this.getDate(time).format(this.config.timeFormat);
 
-  getToday = () => this.getFormatted(moment(), "dateFormat");
+  getToday = () => this.getFormatted(m, "dateFormat");
 
   getMonthName = (month: number) => this.config.monthNames[month];
 

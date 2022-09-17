@@ -17,9 +17,6 @@ const App: React.FC<AppProps> = ({ style }) => {
         onSelectedChange={() => {}}
         onTimeChange={() => {}}
         mode={Modes.date}
-        options={null}
-        selectorEndingYear={() => {}}
-        selectorStartingYear={() => {}}
       />
     </View>
   );

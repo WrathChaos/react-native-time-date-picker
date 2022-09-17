@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { Calendar, SelectMonth, SelectTime } from "./components";
 import { IOptions, ITimeDatePickerProps, Modes, utils } from "../utils";
 
-const options = {
+export const defaultOptions = {
   backgroundColor: "#fff",
   textHeaderColor: "#212c35",
   textDefaultColor: "#2d4150",
@@ -65,7 +65,7 @@ const TimeDatePicker: React.FC<ITimeDatePickerProps> = (props) => {
 
   const contextValue: IContextValueProps = {
     ...props,
-    options: { ...options, ...props.options },
+    options: { ...defaultOptions, ...props.options },
     utils: calendarUtils,
     state: useReducer(reducer, {
       activeDate: currentDate || calendarUtils.getToday(),

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { styles } from "./Header.style";
-import { useCalendar } from "../../TimeDatePicker";
+import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 import { Modes } from "../../../utils";
 
 interface HeaderProps {
@@ -18,7 +18,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
   const {
-    options,
+    options = defaultOptions,
     disableDateChange,
     state,
     utils,

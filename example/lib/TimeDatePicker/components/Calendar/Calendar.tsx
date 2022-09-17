@@ -12,14 +12,19 @@ import {
  */
 import { styles } from "./Calendar.style";
 import { Header, Days } from "..";
-import { useCalendar } from "../../TimeDatePicker";
+import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 
 export interface CalendarProps {
   calendarStyle?: StyleProp<ViewStyle>;
 }
 
 const Calendar: React.FC<CalendarProps> = ({ calendarStyle }) => {
-  const { options, state, utils, onSelectedChange } = useCalendar();
+  const {
+    options = defaultOptions,
+    state,
+    utils,
+    onSelectedChange,
+  } = useCalendar();
   const [mainState] = state;
   const style = styles([options, calendarStyle]);
   const [{ shownAnimation }, changeMonthAnimation] = utils.useMonthAnimation(

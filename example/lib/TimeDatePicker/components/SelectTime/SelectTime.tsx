@@ -24,6 +24,7 @@ const TimeScroller = ({ title, data, onChange }) => {
   const scrollListener = useRef("0");
   const active = useRef(0);
   data = ["", "", ...data, "", ""];
+  const flatListRef = useRef();
 
   useEffect(() => {
     scrollListener.current && clearInterval(Number(scrollListener.current));
@@ -63,31 +64,43 @@ const TimeScroller = ({ title, data, onChange }) => {
     };
 
     return (
-      <Animated.View
-        style={[
-          {
-            width: itemSize,
-            opacity: scrollAnimatedValue.interpolate(makeAnimated(1, 0.6, 0.3)),
-            transform: [
-              {
-                scale: scrollAnimatedValue.interpolate(
-                  makeAnimated(1.2, 0.9, 0.8),
-                ),
-              },
-              {
-                scaleX: I18nManager.isRTL ? -1 : 1,
-              },
-            ],
-          },
-          style.listItem,
-        ]}
+      <RNBounceable
+        onPress={() => {
+          // @ts-ignore
+          flatListRef.current.scrollToOffset({
+            animated: true,
+            offset: item * itemSize,
+          });
+        }}
       >
-        <Text style={style.listItemText}>
-          {utils.getConvertedNumber(
-            String(item).length === 1 ? "0" + String(item) : String(item),
-          )}
-        </Text>
-      </Animated.View>
+        <Animated.View
+          style={[
+            {
+              width: itemSize,
+              opacity: scrollAnimatedValue.interpolate(
+                makeAnimated(1, 0.6, 0.3),
+              ),
+              transform: [
+                {
+                  scale: scrollAnimatedValue.interpolate(
+                    makeAnimated(1.2, 0.9, 0.8),
+                  ),
+                },
+                {
+                  scaleX: I18nManager.isRTL ? -1 : 1,
+                },
+              ],
+            },
+            style.listItem,
+          ]}
+        >
+          <Text style={style.listItemText}>
+            {utils.getConvertedNumber(
+              String(item).length === 1 ? "0" + String(item) : String(item),
+            )}
+          </Text>
+        </Animated.View>
+      </RNBounceable>
     );
   };
 
@@ -95,6 +108,7 @@ const TimeScroller = ({ title, data, onChange }) => {
     <View style={style.row} onLayout={changeItemWidth}>
       <Text style={style.title}>{title}</Text>
       <AnimatedFlatList
+        ref={flatListRef}
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         horizontal

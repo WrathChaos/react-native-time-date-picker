@@ -24,11 +24,15 @@ export const styles = (theme: IOptions) =>
       fontSize: theme.textHeaderFontSize,
       color: theme.mainColor,
       fontFamily: theme.headerFont,
+      marginBottom: 12,
     },
     listItem: {
       height: 60,
       alignItems: "center",
       justifyContent: "center",
+      borderLeftWidth: 0.5,
+      borderRightWidth: 0.5,
+      borderColor: theme.borderColor,
     },
     listItemText: {
       fontSize: theme.textHeaderFontSize,

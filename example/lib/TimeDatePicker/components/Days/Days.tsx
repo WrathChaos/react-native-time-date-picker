@@ -3,12 +3,14 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./Days.style";
 import { useCalendar } from "../../TimeDatePicker";
 
-const Days = (factory: any, deps: React.DependencyList | undefined) => {
+const Days = () => {
   const { options, state, utils, onDateChange } = useCalendar();
   const [mainState, setMainState] = state;
   const [itemSize, setItemSize] = useState(0);
   const style = styles(options);
-  const days = useMemo(() => utils.getMonthDays(mainState.activeDate), deps);
+  // @ts-ignore
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const days = useMemo(() => utils.getMonthDays(mainState.activeDate));
 
   const onSelectDay = (date: string | undefined) => {
     setMainState({

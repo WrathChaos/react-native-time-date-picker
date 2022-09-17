@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  StyleSheet,
-  Text,
   Animated,
-  FlatList,
   Easing,
-  TouchableOpacity,
+  FlatList,
   I18nManager,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-
-import { useCalendar } from "../TimeDatePicker";
+import { styles } from "./SelectTime.style";
+import { useCalendar } from "../../TimeDatePicker";
+import { Modes } from "../../../utils";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -19,15 +19,18 @@ const TimeScroller = ({ title, data, onChange }) => {
   const [itemSize, setItemSize] = useState(0);
   const style = styles(options);
   const scrollAnimatedValue = useRef(new Animated.Value(0)).current;
-  const scrollListener = useRef(null);
+  const scrollListener = useRef();
   const active = useRef(0);
   data = ["", "", ...data, "", ""];
 
   useEffect(() => {
-    scrollListener.current && clearInterval(scrollListener.current);
-    scrollListener.current = scrollAnimatedValue.addListener(
-      ({ value }) => (active.current = value),
-    );
+    if (scrollListener.current) {
+      clearInterval(scrollListener.current);
+      // @ts-ignore
+      scrollListener.current = scrollAnimatedValue.addListener(
+        ({ value }) => (active.current = value),
+      );
+    }
 
     return () => {
       clearInterval(scrollListener.current);
@@ -79,7 +82,9 @@ const TimeScroller = ({ title, data, onChange }) => {
         ]}
       >
         <Text style={style.listItemText}>
-          {utils.toPersianNumber(String(item).length === 1 ? "0" + item : item)}
+          {utils.getConvertedNumber(
+            String(item).length === 1 ? "0" + item : item,
+          )}
         </Text>
       </Animated.View>
     );
@@ -165,9 +170,9 @@ const SelectTime = () => {
     newTime.hour(time.hour).minute(time.minute);
     setMainState({
       type: "set",
-      activeDate: utils.getFormated(newTime),
+      activeDate: utils.getFormatted(newTime),
       selectedDate: mainState.selectedDate
-        ? utils.getFormated(
+        ? utils.getFormatted(
             utils
               .getDate(mainState.selectedDate)
               .hour(time.hour)
@@ -175,8 +180,8 @@ const SelectTime = () => {
           )
         : "",
     });
-    onTimeChange(utils.getFormated(newTime, "timeFormat"));
-    mode !== "time" &&
+    onTimeChange(utils.getFormatted(newTime, "timeFormat"));
+    mode !== Modes.time &&
       setMainState({
         type: "toggleTime",
       });
@@ -200,12 +205,12 @@ const SelectTime = () => {
   return show ? (
     <Animated.View style={containerStyle}>
       <TimeScroller
-        title={utils.config.hour}
+        title={utils.config.translation.hour}
         data={Array.from({ length: 24 }, (x, i) => i)}
         onChange={(hour) => setTime({ ...time, hour })}
       />
       <TimeScroller
-        title={utils.config.minute}
+        title={utils.config.translation.minute}
         data={Array.from(
           { length: 60 / minuteInterval },
           (x, i) => i * minuteInterval,
@@ -218,9 +223,11 @@ const SelectTime = () => {
           activeOpacity={0.8}
           onPress={selectTime}
         >
-          <Text style={style.btnText}>{utils.config.timeSelect}</Text>
+          <Text style={style.btnText}>
+            {utils.config.translation.timeSelect}
+          </Text>
         </TouchableOpacity>
-        {mode !== "time" && (
+        {mode !== Modes.time && (
           <TouchableOpacity
             style={[style.button, style.cancelButton]}
             onPress={() =>
@@ -230,68 +237,14 @@ const SelectTime = () => {
             }
             activeOpacity={0.8}
           >
-            <Text style={style.btnText}>{utils.config.timeClose}</Text>
+            <Text style={style.btnText}>
+              {utils.config.translation.timeClose}
+            </Text>
           </TouchableOpacity>
         )}
       </View>
     </Animated.View>
   ) : null;
 };
-
-const styles = (theme) =>
-  StyleSheet.create({
-    container: {
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      top: 0,
-      right: 0,
-      backgroundColor: theme.backgroundColor,
-      borderRadius: 10,
-      flexDirection: "column",
-      justifyContent: "center",
-      zIndex: 999,
-    },
-    row: {
-      flexDirection: "column",
-      alignItems: "center",
-      marginVertical: 5,
-    },
-    title: {
-      fontSize: theme.textHeaderFontSize,
-      color: theme.mainColor,
-      fontFamily: theme.headerFont,
-    },
-    listItem: {
-      height: 60,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    listItemText: {
-      fontSize: theme.textHeaderFontSize,
-      color: theme.textDefaultColor,
-      fontFamily: theme.defaultFont,
-    },
-    footer: {
-      flexDirection: "row",
-      justifyContent: "center",
-      marginTop: 15,
-    },
-    button: {
-      paddingVertical: 10,
-      paddingHorizontal: 25,
-      borderRadius: 8,
-      backgroundColor: theme.mainColor,
-      margin: 8,
-    },
-    btnText: {
-      fontSize: theme.textFontSize,
-      color: theme.selectedTextColor,
-      fontFamily: theme.defaultFont,
-    },
-    cancelButton: {
-      backgroundColor: theme.textSecondaryColor,
-    },
-  });
 
 export { SelectTime };

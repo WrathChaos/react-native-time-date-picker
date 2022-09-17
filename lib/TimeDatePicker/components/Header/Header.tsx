@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import {
-  View,
-  TouchableOpacity,
-  Text,
-  Image,
-  StyleSheet,
   Animated,
   I18nManager,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
-import { useCalendar } from "../TimeDatePicker";
+import { styles } from "./Header.style";
+import { useCalendar } from "../../TimeDatePicker";
+import { Modes } from "../../../utils";
 
-const Header = ({ changeMonth }) => {
+interface HeaderProps {
+  changeMonth: (type: string) => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
   const {
     options,
     disableDateChange,
@@ -20,7 +24,6 @@ const Header = ({ changeMonth }) => {
     utils,
     minimumDate,
     maximumDate,
-    isGregorian,
     mode,
   } = useCalendar();
   const [mainState, setMainState] = state;
@@ -36,22 +39,26 @@ const Header = ({ changeMonth }) => {
   );
   const prevDisable =
     disableDateChange ||
-    (minimumDate && utils.checkArrowMonthDisabled(mainState.activeDate, true));
+    (minimumDate &&
+      utils.checkArrowMonthDisabled(mainState.activeDate, true)) ||
+    true;
   const nextDisable =
     disableDateChange ||
-    (maximumDate && utils.checkArrowMonthDisabled(mainState.activeDate, false));
+    (maximumDate &&
+      utils.checkArrowMonthDisabled(mainState.activeDate, false)) ||
+    false;
 
-  const onChangeMonth = (type) => {
+  const onChangeMonth = (type: string) => {
     if (disableChange) return;
     setDisableChange(true);
     changeMonthAnimation(type);
     const modificationNumber = type === "NEXT" ? 1 : -1;
     const newDate = utils
       .getDate(mainState.activeDate)
-      .add(modificationNumber, isGregorian ? "month" : "jMonth");
+      .add(modificationNumber, "month");
     setMainState({
       type: "set",
-      activeDate: utils.getFormated(newDate),
+      activeDate: utils.getFormatted(newDate),
     });
     changeMonth(type);
   };
@@ -66,7 +73,7 @@ const Header = ({ changeMonth }) => {
         style={style.arrowWrapper}
       >
         <Image
-          source={require("../../assets/arrow.png")}
+          source={require("../../../assets/arrow.png")}
           style={[style.arrow, nextDisable && style.disableArrow]}
         />
       </TouchableOpacity>
@@ -81,11 +88,7 @@ const Header = ({ changeMonth }) => {
         >
           <TouchableOpacity
             activeOpacity={0.7}
-            style={[
-              style.centerWrapper,
-              style.monthYearWrapper,
-              utils.flexDirection,
-            ]}
+            style={[style.centerWrapper, style.monthYearWrapper]}
             onPress={() =>
               !disableDateChange &&
               setMainState({
@@ -100,7 +103,7 @@ const Header = ({ changeMonth }) => {
               {utils.getMonthYearText(mainState.activeDate).split(" ")[1]}
             </Text>
           </TouchableOpacity>
-          {mode === "datepicker" && (
+          {mode === Modes.date && (
             <TouchableOpacity
               activeOpacity={0.7}
               style={[
@@ -117,7 +120,7 @@ const Header = ({ changeMonth }) => {
               }
             >
               <Text style={style.headerText}>
-                {utils.toPersianNumber(utils.getTime(mainState.activeDate))}
+                {utils.getConvertedNumber(utils.getTime(mainState.activeDate))}
               </Text>
             </TouchableOpacity>
           )}
@@ -126,7 +129,6 @@ const Header = ({ changeMonth }) => {
           style={[
             style.monthYear,
             hiddenAnimation,
-            utils.flexDirection,
             I18nManager.isRTL && style.reverseMonthYear,
           ]}
         >
@@ -136,9 +138,9 @@ const Header = ({ changeMonth }) => {
           <Text style={style.headerText}>
             {utils.getMonthYearText(lastDate).split(" ")[1]}
           </Text>
-          {mode === "datepicker" && (
+          {mode === Modes.date && (
             <Text style={style.headerText}>
-              {utils.toPersianNumber(utils.getTime(mainState.activeDate))}
+              {utils.getConvertedNumber(utils.getTime(mainState.activeDate))}
             </Text>
           )}
         </Animated.View>
@@ -149,7 +151,7 @@ const Header = ({ changeMonth }) => {
         style={style.arrowWrapper}
       >
         <Image
-          source={require("../../assets/arrow.png")}
+          source={require("../../../assets/arrow.png")}
           style={[
             style.arrow,
             style.leftArrow,
@@ -159,89 +161,6 @@ const Header = ({ changeMonth }) => {
       </TouchableOpacity>
     </View>
   );
-};
-
-const styles = (theme) =>
-  StyleSheet.create({
-    container: {
-      alignItems: "center",
-      flexDirection: "row-reverse",
-    },
-    reverseContainer: {
-      flexDirection: "row",
-    },
-    arrowWrapper: {
-      padding: 20,
-      position: "relative",
-      zIndex: 1,
-      opacity: 1,
-    },
-    arrow: {
-      width: 18,
-      height: 18,
-      opacity: 0.9,
-      tintColor: theme.mainColor,
-      margin: 2,
-    },
-    leftArrow: {
-      transform: [
-        {
-          rotate: "180deg",
-        },
-      ],
-    },
-    disableArrow: {
-      opacity: 0,
-    },
-    monthYearContainer: {
-      flex: 1,
-      position: "relative",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    monthYear: {
-      position: "absolute",
-      alignItems: "center",
-      flexDirection: "row-reverse",
-    },
-    reverseMonthYear: {
-      flexDirection: "row",
-    },
-    activeMonthYear: {
-      zIndex: 999,
-    },
-    monthYearWrapper: {
-      alignItems: "center",
-    },
-    headerText: {
-      fontSize: theme.textHeaderFontSize,
-      padding: 2,
-      color: theme.textHeaderColor,
-      fontFamily: theme.defaultFont,
-      textAlignVertical: "center",
-    },
-    monthText: {
-      fontFamily: theme.headerFont,
-    },
-    centerWrapper: {
-      borderColor: theme.borderColor,
-      paddingVertical: 4,
-      paddingHorizontal: 8,
-      alignItems: "center",
-      borderRadius: 5,
-      borderWidth: 1,
-    },
-    time: {
-      marginRight: 5,
-    },
-  });
-
-Header.defaultProps = {
-  changeMonth: () => null,
-};
-
-Header.propTypes = {
-  changeMonth: PropTypes.func,
 };
 
 export { Header };

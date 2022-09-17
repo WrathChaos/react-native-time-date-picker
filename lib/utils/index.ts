@@ -200,7 +200,7 @@ class utils {
   useMonthAnimation = (
     activeDate: number,
     distance: number,
-    onEnd = () => null,
+    onEnd: () => void,
   ): any => {
     const [lastDate, setLastDate] = useState(activeDate);
     const [changeWay, setChangeWay] = useState(null);

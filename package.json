@@ -51,5 +51,8 @@
     "husky:commitlint": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit'",
     "husky:prettier": "npx husky set .husky/pre-commit 'npm run prettier'",
     "husky:lint": "npx husky add .husky/pre-commit 'npm run lint'"
+  },
+  "dependencies": {
+    "moment": "^2.29.4"
   }
 }

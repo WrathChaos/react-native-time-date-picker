@@ -6,10 +6,10 @@ import {
   Image,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 import moment from "moment";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 
 import { styles } from "./SelectMonth.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
@@ -65,9 +65,10 @@ const SelectMonth = () => {
       let y = Number(utils.getConvertedNumber(year));
       const date = utils.getDate(utils.validYear(mainState.activeDate, y));
       const activeDate = month !== null ? date.month(month) : date;
+
       setMainState({
         type: "set",
-        activeDate: utils.getFormatted(activeDate),
+        activeDate,
       });
       month !== null &&
         onMonthYearChange(utils.getFormatted(activeDate, "monthYearFormat"));
@@ -118,8 +119,7 @@ const SelectMonth = () => {
   return show ? (
     <Animated.View style={containerStyle}>
       <View style={[style.header, I18nManager.isRTL && style.reverseHeader]}>
-        <TouchableOpacity
-          activeOpacity={0.7}
+        <RNBounceable
           style={style.arrowWrapper}
           onPress={() => !nextDisable && onSelectYear(-1)}
         >
@@ -131,7 +131,7 @@ const SelectMonth = () => {
               nextDisable && style.disableArrow,
             ]}
           />
-        </TouchableOpacity>
+        </RNBounceable>
         <TextInput
           style={style.yearInput}
           keyboardType="numeric"
@@ -145,8 +145,7 @@ const SelectMonth = () => {
           selectionColor={options.mainColor}
           onChangeText={onChangeYear}
         />
-        <TouchableOpacity
-          activeOpacity={0.7}
+        <RNBounceable
           style={style.arrowWrapper}
           onPress={() => !prevDisable && onSelectYear(+1)}
         >
@@ -154,7 +153,7 @@ const SelectMonth = () => {
             source={require("../../../assets/arrow.png")}
             style={[style.arrow, prevDisable && style.disableArrow]}
           />
-        </TouchableOpacity>
+        </RNBounceable>
       </View>
 
       <View style={[style.monthList, { flexDirection: "row" }]}>
@@ -163,10 +162,10 @@ const SelectMonth = () => {
             mainState.activeDate,
             item,
           );
+
           return (
-            <TouchableOpacity
+            <RNBounceable
               key={item}
-              activeOpacity={0.8}
               style={[
                 style.item,
                 currentMonth === item + 1 && style.selectedItem,
@@ -182,7 +181,7 @@ const SelectMonth = () => {
               >
                 {utils.getMonthName(item)}
               </Text>
-            </TouchableOpacity>
+            </RNBounceable>
           );
         })}
       </View>

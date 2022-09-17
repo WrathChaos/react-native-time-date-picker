@@ -11,6 +11,7 @@ import {
 import { styles } from "./SelectTime.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 import { Modes } from "../../../utils";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -220,25 +221,20 @@ const SelectTime = () => {
         onChange={(minute: number) => setTime({ ...time, minute })}
       />
       <View style={style.footer}>
-        <TouchableOpacity
-          style={style.button}
-          activeOpacity={0.8}
-          onPress={selectTime}
-        >
+        <RNBounceable style={style.button} onPress={selectTime}>
           <Text style={style.btnText}>{utils.config.timeSelect}</Text>
-        </TouchableOpacity>
+        </RNBounceable>
         {mode !== Modes.time && (
-          <TouchableOpacity
+          <RNBounceable
             style={[style.button, style.cancelButton]}
             onPress={() =>
               setMainState({
                 type: "toggleTime",
               })
             }
-            activeOpacity={0.8}
           >
             <Text style={style.btnText}>{utils.config.timeClose}</Text>
-          </TouchableOpacity>
+          </RNBounceable>
         )}
       </View>
     </Animated.View>

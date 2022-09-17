@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 import { styles } from "./Days.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 
@@ -45,7 +46,7 @@ const Days = () => {
           }}
         >
           {day && (
-            <TouchableOpacity
+            <RNBounceable
               style={[
                 style.dayItem,
                 {
@@ -54,7 +55,6 @@ const Days = () => {
                 mainState.selectedDate === day.date && style.dayItemSelected,
               ]}
               onPress={() => !day.disabled && onSelectDay(day.date)}
-              activeOpacity={0.8}
             >
               <Text
                 style={[
@@ -65,7 +65,7 @@ const Days = () => {
               >
                 {day.dayString}
               </Text>
-            </TouchableOpacity>
+            </RNBounceable>
           )}
         </View>
       ))}

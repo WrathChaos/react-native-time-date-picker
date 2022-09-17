@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import {
-  Animated,
-  I18nManager,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, I18nManager, Image, Text, View } from "react-native";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 
 import { styles } from "./Header.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
@@ -69,16 +63,15 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
     <View
       style={[style.container, I18nManager.isRTL && style.reverseContainer]}
     >
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => !nextDisable && onChangeMonth("NEXT")}
+      <RNBounceable
         style={style.arrowWrapper}
+        onPress={() => !nextDisable && onChangeMonth("NEXT")}
       >
         <Image
           source={require("../../../assets/arrow.png")}
           style={[style.arrow, nextDisable && style.disableArrow]}
         />
-      </TouchableOpacity>
+      </RNBounceable>
       <View style={style.monthYearContainer}>
         <Animated.View
           style={[
@@ -88,8 +81,7 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
             I18nManager.isRTL && style.reverseMonthYear,
           ]}
         >
-          <TouchableOpacity
-            activeOpacity={0.7}
+          <RNBounceable
             style={[
               style.centerWrapper,
               style.monthYearWrapper,
@@ -108,10 +100,9 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
             <Text style={[style.headerText, style.monthText]}>
               {utils.getMonthYearText(mainState.activeDate).split(" ")[1]}
             </Text>
-          </TouchableOpacity>
+          </RNBounceable>
           {mode === Modes.date && (
-            <TouchableOpacity
-              activeOpacity={0.7}
+            <RNBounceable
               style={[
                 style.centerWrapper,
                 {
@@ -128,7 +119,7 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
               <Text style={style.headerText}>
                 {utils.getConvertedNumber(utils.getTime(mainState.activeDate))}
               </Text>
-            </TouchableOpacity>
+            </RNBounceable>
           )}
         </Animated.View>
         <Animated.View
@@ -152,10 +143,9 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
           )}
         </Animated.View>
       </View>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={() => !prevDisable && onChangeMonth("PREVIOUS")}
+      <RNBounceable
         style={style.arrowWrapper}
+        onPress={() => !prevDisable && onChangeMonth("PREVIOUS")}
       >
         <Image
           source={require("../../../assets/arrow.png")}
@@ -165,7 +155,7 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
             prevDisable && style.disableArrow,
           ]}
         />
-      </TouchableOpacity>
+      </RNBounceable>
     </View>
   );
 };

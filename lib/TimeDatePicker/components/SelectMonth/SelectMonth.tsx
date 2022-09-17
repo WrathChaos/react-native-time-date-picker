@@ -1,24 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  StyleSheet,
-  Text,
   Animated,
-  TouchableOpacity,
   Easing,
-  Image,
-  TextInput,
   I18nManager,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
-import { useCalendar } from "../TimeDatePicker";
+import { styles } from "./SelectMonth.style";
+import { useCalendar } from "../../TimeDatePicker";
+import { Modes } from "../../../utils";
 
 const SelectMonth = () => {
   const {
     options,
     state,
     utils,
-    isGregorian,
     selectorStartingYear,
     selectorEndingYear,
     mode,
@@ -35,10 +35,13 @@ const SelectMonth = () => {
   const openAnimation = useRef(new Animated.Value(0)).current;
   const currentMonth = Number(mainState.activeDate.split("/")[1]);
   const prevDisable =
-    maximumDate && utils.checkYearDisabled(Number(utils.toEnglish(year)), true);
+    (maximumDate &&
+      utils.checkYearDisabled(Number(utils.getConvertedNumber(year)), true)) ||
+    true;
   const nextDisable =
-    minimumDate &&
-    utils.checkYearDisabled(Number(utils.toEnglish(year)), false);
+    (minimumDate &&
+      utils.checkYearDisabled(Number(utils.getConvertedNumber(year)), false)) ||
+    false;
 
   useEffect(() => {
     mainState.monthOpen && setShow(true);
@@ -58,22 +61,17 @@ const SelectMonth = () => {
 
   const onSelectMonth = (month) => {
     if (show) {
-      let y = Number(utils.toEnglish(year));
+      let y = Number(utils.getConvertedNumber(year));
       const date = utils.getDate(utils.validYear(mainState.activeDate, y));
-      const activeDate =
-        month !== null
-          ? isGregorian
-            ? date.month(month)
-            : date.jMonth(month)
-          : date;
+      const activeDate = month !== null ? date.month(month) : date;
       setMainState({
         type: "set",
-        activeDate: utils.getFormated(activeDate),
+        activeDate: utils.getFormatted(activeDate),
       });
       month !== null &&
-        onMonthYearChange(utils.getFormated(activeDate, "monthYearFormat"));
+        onMonthYearChange(utils.getFormatted(activeDate, "monthYearFormat"));
       month !== null &&
-        mode !== "monthYear" &&
+        mode !== Modes.monthYear &&
         setMainState({
           type: "toggleMonth",
         });
@@ -86,19 +84,19 @@ const SelectMonth = () => {
   }, [prevDisable, nextDisable]);
 
   const onChangeYear = (text) => {
-    if (Number(utils.toEnglish(text))) {
-      setYear(utils.toPersianNumber(text));
+    if (Number(utils.getConvertedNumber(text))) {
+      setYear(utils.getConvertedNumber(text));
     }
   };
 
   const onSelectYear = (number) => {
-    let y = Number(utils.toEnglish(year)) + number;
+    let y = Number(utils.getConvertedNumber(year)) + number;
     if (y > selectorEndingYear) {
       y = selectorEndingYear;
     } else if (y < selectorStartingYear) {
       y = selectorStartingYear;
     }
-    setYear(utils.toPersianNumber(y));
+    setYear(utils.getConvertedNumber(y));
   };
 
   const containerStyle = [
@@ -125,7 +123,7 @@ const SelectMonth = () => {
           onPress={() => !nextDisable && onSelectYear(-1)}
         >
           <Image
-            source={require("../../assets/arrow.png")}
+            source={require("../../../assets/arrow.png")}
             style={[
               style.arrow,
               style.leftArrow,
@@ -152,13 +150,13 @@ const SelectMonth = () => {
           onPress={() => !prevDisable && onSelectYear(+1)}
         >
           <Image
-            source={require("../../assets/arrow.png")}
+            source={require("../../../assets/arrow.png")}
             style={[style.arrow, prevDisable && style.disableArrow]}
           />
         </TouchableOpacity>
       </View>
 
-      <View style={[style.monthList, utils.flexDirection]}>
+      <View style={style.monthList}>
         {[...Array(12).keys()].map((item) => {
           const disabled = utils.checkSelectMonthDisabled(
             mainState.activeDate,
@@ -190,94 +188,5 @@ const SelectMonth = () => {
     </Animated.View>
   ) : null;
 };
-
-const styles = (theme) =>
-  StyleSheet.create({
-    container: {
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      top: 0,
-      right: 0,
-      backgroundColor: theme.backgroundColor,
-      borderRadius: 10,
-      flexDirection: "column",
-      zIndex: 999,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    header: {
-      alignItems: "center",
-      paddingHorizontal: 15,
-      justifyContent: "space-between",
-      width: "80%",
-      flexDirection: "row",
-    },
-    reverseHeader: {
-      flexDirection: "row-reverse",
-    },
-    monthList: {
-      flexWrap: "wrap",
-      margin: 25,
-    },
-    item: {
-      width: "30%",
-      marginHorizontal: "1.5%",
-      paddingVertical: 8,
-      marginVertical: 7,
-      alignItems: "center",
-    },
-    selectedItem: {
-      backgroundColor: theme.mainColor,
-      borderRadius: 12,
-    },
-    itemText: {
-      fontFamily: theme.defaultFont,
-      fontSize: theme.textFontSize,
-      color: theme.textDefaultColor,
-    },
-    selectedItemText: {
-      color: theme.selectedTextColor,
-    },
-    disabledItemText: {
-      opacity: 0.2,
-    },
-    arrowWrapper: {
-      padding: 13,
-      position: "relative",
-      zIndex: 1,
-      opacity: 1,
-    },
-    disableArrow: {
-      opacity: 0,
-    },
-    arrow: {
-      width: 18,
-      height: 18,
-      opacity: 0.9,
-      tintColor: theme.mainColor,
-      margin: 2,
-    },
-    leftArrow: {
-      transform: [
-        {
-          rotate: "180deg",
-        },
-      ],
-    },
-    arrowDisable: {
-      opacity: 0,
-    },
-    yearInput: {
-      fontSize: theme.textHeaderFontSize,
-      paddingVertical: 2,
-      paddingHorizontal: 4,
-      color: theme.textHeaderColor,
-      fontFamily: theme.headerFont,
-      textAlignVertical: "center",
-      minWidth: 100,
-      textAlign: "center",
-    },
-  });
 
 export { SelectMonth };

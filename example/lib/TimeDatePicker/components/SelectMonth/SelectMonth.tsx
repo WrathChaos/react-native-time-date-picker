@@ -38,7 +38,7 @@ const SelectMonth = () => {
   const prevDisable =
     (maximumDate &&
       utils.checkYearDisabled(Number(utils.getConvertedNumber(year)), true)) ||
-    true;
+    false;
   const nextDisable =
     (minimumDate &&
       utils.checkYearDisabled(Number(utils.getConvertedNumber(year)), false)) ||

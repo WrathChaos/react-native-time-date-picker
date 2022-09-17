@@ -51,15 +51,6 @@ const TimeDatePicker: React.FC<ITimeDatePickerProps> = (props) => {
     currentDate = new Date(),
     selectedDate,
     mode = Modes.date,
-    // selectorStartingYear = 0,
-    // selectorEndingYear = 3000,
-    // disableDateChange = false,
-    // minuteInterval = 5,
-    // onSelectedChange,
-    // onMonthYearChange,
-    // onTimeChange,
-    // onDateChange,
-    // translation = "en",
   } = props;
   const calendarUtils = new utils(props);
 

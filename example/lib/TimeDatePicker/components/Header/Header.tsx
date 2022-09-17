@@ -19,7 +19,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
   const {
     options = defaultOptions,
-    disableDateChange,
+    disableDateChange = false,
     state,
     utils,
     minimumDate,

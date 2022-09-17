@@ -37,8 +37,8 @@ export interface ITimeDatePickerProps extends IMinMaxDates {
   configs?: IConfig;
   style?: StyleProp<ViewStyle>;
   options: IOptions;
-  currentDate?: number;
-  selectedDate?: number;
+  currentDate?: string;
+  selectedDate?: string;
   selectorStartingYear?: number;
   selectorEndingYear?: number;
   disableDateChange?: boolean;

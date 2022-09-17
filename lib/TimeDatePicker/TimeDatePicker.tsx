@@ -60,13 +60,12 @@ const TimeDatePicker: React.FC<ITimeDatePickerProps> = (props) => {
     onTimeChange,
     onDateChange,
     translation = "en",
-    ...rest
   } = props;
   const calendarUtils = new utils(props);
 
   const contextValue: IContextValueProps = {
-    ...rest,
-    options: { ...options, ...rest.options },
+    ...props,
+    options: { ...options, ...props.options },
     utils: calendarUtils,
     state: useReducer(reducer, {
       activeDate: currentDate || calendarUtils.getToday(),

@@ -37,13 +37,6 @@ const TimeScroller = ({ title, data, onChange }) => {
     };
   }, [scrollAnimatedValue]);
 
-  useEffect(() => {
-    flatListRef.current.scrollToOffset({
-      animated: true,
-      offset: 9 * itemSize,
-    });
-  });
-
   // @ts-ignore
   const changeItemWidth = ({ nativeEvent }) => {
     const { width } = nativeEvent.layout;

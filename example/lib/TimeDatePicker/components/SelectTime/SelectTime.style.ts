@@ -1,4 +1,4 @@
-import { ViewStyle, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { IOptions } from "../../../utils";
 
 export const styles = (theme: IOptions) =>

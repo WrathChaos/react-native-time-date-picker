@@ -37,13 +37,6 @@ const TimeScroller = ({ title, data, onChange }) => {
     };
   }, [scrollAnimatedValue]);
 
-  useEffect(() => {
-    flatListRef.current.scrollToOffset({
-      animated: true,
-      offset: 9 * itemSize,
-    });
-  });
-
   // @ts-ignore
   const changeItemWidth = ({ nativeEvent }) => {
     const { width } = nativeEvent.layout;
@@ -73,11 +66,19 @@ const TimeScroller = ({ title, data, onChange }) => {
     return (
       <RNBounceable
         onPress={() => {
-          // @ts-ignore
-          flatListRef.current.scrollToOffset({
-            animated: true,
-            offset: item * itemSize,
-          });
+          if (title === utils.config.hour) {
+            // @ts-ignore
+            flatListRef.current.scrollToOffset({
+              animated: true,
+              offset: (item - (options.is24Hour ? 0 : 1)) * itemSize,
+            });
+          } else {
+            // @ts-ignore
+            flatListRef.current.scrollToOffset({
+              animated: true,
+              offset: item * itemSize,
+            });
+          }
         }}
       >
         <Animated.View
@@ -90,7 +91,7 @@ const TimeScroller = ({ title, data, onChange }) => {
               transform: [
                 {
                   scale: scrollAnimatedValue.interpolate(
-                    makeAnimated(2, 0.9, 0.8),
+                    makeAnimated(2, 0.9, 0.7),
                   ),
                 },
                 {
@@ -101,7 +102,7 @@ const TimeScroller = ({ title, data, onChange }) => {
             style.listItem,
           ]}
         >
-          <Text style={[style.listItemText]}>
+          <Text style={style.listItemText}>
             {utils.getConvertedNumber(
               String(item).length === 1 ? "0" + String(item) : String(item),
             )}
@@ -110,15 +111,6 @@ const TimeScroller = ({ title, data, onChange }) => {
       </RNBounceable>
     );
   };
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      flatListRef.current?.scrollToOffset({
-        animated: true,
-        offset: 9 * itemSize,
-      });
-    }, 2000);
-  }, []);
 
   return (
     <View style={style.row} onLayout={changeItemWidth}>

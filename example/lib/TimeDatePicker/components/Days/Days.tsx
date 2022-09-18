@@ -37,9 +37,9 @@ const Days = () => {
       style={[style.container, { flexDirection: "row" }]}
       onLayout={changeItemHeight}
     >
-      {days.map((day, n) => (
+      {days.map((day, index) => (
         <View
-          key={n}
+          key={index}
           style={{
             width: itemSize,
             height: itemSize,

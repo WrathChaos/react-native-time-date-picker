@@ -37,6 +37,13 @@ const TimeScroller = ({ title, data, onChange }) => {
     };
   }, [scrollAnimatedValue]);
 
+  useEffect(() => {
+    flatListRef.current.scrollToOffset({
+      animated: true,
+      offset: 9 * itemSize,
+    });
+  });
+
   // @ts-ignore
   const changeItemWidth = ({ nativeEvent }) => {
     const { width } = nativeEvent.layout;
@@ -94,7 +101,7 @@ const TimeScroller = ({ title, data, onChange }) => {
             style.listItem,
           ]}
         >
-          <Text style={style.listItemText}>
+          <Text style={[style.listItemText]}>
             {utils.getConvertedNumber(
               String(item).length === 1 ? "0" + String(item) : String(item),
             )}
@@ -103,6 +110,15 @@ const TimeScroller = ({ title, data, onChange }) => {
       </RNBounceable>
     );
   };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      flatListRef.current?.scrollToOffset({
+        animated: true,
+        offset: 9 * itemSize,
+      });
+    }, 2000);
+  }, []);
 
   return (
     <View style={style.row} onLayout={changeItemWidth}>
@@ -152,9 +168,10 @@ const SelectTime = () => {
     onTimeChange,
   } = useCalendar();
   const [mainState, setMainState] = state;
+  const minute = options.is24Hour ? 0 : 1;
   const [show, setShow] = useState(false);
   const [time, setTime] = useState({
-    minute: 0,
+    minute: minute,
     hour: 0,
   });
   const style = styles(options);
@@ -163,10 +180,10 @@ const SelectTime = () => {
   useEffect(() => {
     show &&
       setTime({
-        minute: 0,
+        minute: minute,
         hour: 0,
       });
-  }, [show]);
+  }, [show, minute]);
 
   useEffect(() => {
     mainState.timeOpen && setShow(true);

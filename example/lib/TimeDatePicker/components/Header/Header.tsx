@@ -81,6 +81,26 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
             I18nManager.isRTL && style.reverseMonthYear,
           ]}
         >
+          {mode === Modes.date && (
+            <RNBounceable
+              style={[
+                style.centerWrapper,
+                {
+                  marginRight: I18nManager.isRTL ? 8 : 0,
+                  marginLeft: I18nManager.isRTL ? 0 : 8,
+                },
+              ]}
+              onPress={() =>
+                setMainState({
+                  type: "toggleTime",
+                })
+              }
+            >
+              <Text style={style.headerText}>
+                {utils.getConvertedNumber(utils.getTime(mainState.activeDate))}
+              </Text>
+            </RNBounceable>
+          )}
           <RNBounceable
             style={[
               style.centerWrapper,
@@ -101,26 +121,6 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
               {utils.getMonthYearText(mainState.activeDate).split(" ")[1]}
             </Text>
           </RNBounceable>
-          {mode === Modes.date && (
-            <RNBounceable
-              style={[
-                style.centerWrapper,
-                {
-                  marginRight: I18nManager.isRTL ? 0 : 5,
-                  marginLeft: I18nManager.isRTL ? 5 : 0,
-                },
-              ]}
-              onPress={() =>
-                setMainState({
-                  type: "toggleTime",
-                })
-              }
-            >
-              <Text style={style.headerText}>
-                {utils.getConvertedNumber(utils.getTime(mainState.activeDate))}
-              </Text>
-            </RNBounceable>
-          )}
         </Animated.View>
         <Animated.View
           style={[

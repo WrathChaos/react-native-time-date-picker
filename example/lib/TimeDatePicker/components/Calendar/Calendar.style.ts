@@ -13,7 +13,7 @@ export const styles = (theme: IOptions) =>
       alignItems: "center",
       justifyContent: "space-around",
       borderBottomColor: theme.borderColor,
-      borderBottomWidth: 1,
+      borderBottomWidth: 0.5,
       marginHorizontal: 15,
     },
     daysNameText: {

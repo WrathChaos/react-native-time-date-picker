@@ -1,11 +1,13 @@
 import React from "react";
 import { View } from "react-native";
+import moment from "moment";
 import { TimeDatePicker } from "./lib/TimeDatePicker/TimeDatePicker";
 import { Modes } from "./lib/utils";
 
 interface AppProps {}
 
 const App: React.FC<AppProps> = () => {
+  const now = moment().format("YYYY/MM/DD HH:mm");
   return (
     <View
       style={{
@@ -24,6 +26,7 @@ const App: React.FC<AppProps> = () => {
         onTimeChange={(time) => {
           console.log("time: ", time);
         }}
+        selectedDate={now}
         mode={Modes.date}
         options={{
           daysStyle: {

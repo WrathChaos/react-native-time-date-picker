@@ -2,9 +2,10 @@ import React, { createContext, useContext, useReducer, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { Calendar, SelectMonth, SelectTime } from "./components";
-import { IOptions, ITimeDatePickerProps, Modes, utils } from "../utils";
+import { utils } from "../utils";
+import { IOptions, ITimeDatePickerProps, Modes } from "../utils/types";
 
-export const defaultOptions = {
+export const defaultOptions: IOptions = {
   backgroundColor: "#fff",
   textHeaderColor: "#241523",
   textDefaultColor: "#432d50",

@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Animated,
+  Text,
+  View,
   Easing,
   FlatList,
+  Animated,
   I18nManager,
-  Text,
-  TouchableOpacity,
-  View,
 } from "react-native";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 import { styles } from "./SelectTime.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
-import { Modes } from "../../../utils";
-import RNBounceable from "@freakycoder/react-native-bounceable";
+import { Modes } from "../../../utils/types";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -66,11 +65,19 @@ const TimeScroller = ({ title, data, onChange }) => {
     return (
       <RNBounceable
         onPress={() => {
-          // @ts-ignore
-          flatListRef.current.scrollToOffset({
-            animated: true,
-            offset: item * itemSize,
-          });
+          if (title === utils.config.hour) {
+            // @ts-ignore
+            flatListRef.current.scrollToOffset({
+              animated: true,
+              offset: (item - (options.is24Hour ? 0 : 1)) * itemSize,
+            });
+          } else {
+            // @ts-ignore
+            flatListRef.current.scrollToOffset({
+              animated: true,
+              offset: item * itemSize,
+            });
+          }
         }}
       >
         <Animated.View
@@ -83,7 +90,7 @@ const TimeScroller = ({ title, data, onChange }) => {
               transform: [
                 {
                   scale: scrollAnimatedValue.interpolate(
-                    makeAnimated(2, 0.9, 0.8),
+                    makeAnimated(1.8, 0.9, 0.8),
                   ),
                 },
                 {
@@ -94,7 +101,7 @@ const TimeScroller = ({ title, data, onChange }) => {
             style.listItem,
           ]}
         >
-          <Text style={[style.listItemText]}>
+          <Text style={style.listItemText}>
             {utils.getConvertedNumber(
               String(item).length === 1 ? "0" + String(item) : String(item),
             )}
@@ -103,15 +110,6 @@ const TimeScroller = ({ title, data, onChange }) => {
       </RNBounceable>
     );
   };
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      flatListRef.current?.scrollToOffset({
-        animated: true,
-        offset: 9 * itemSize,
-      });
-    }, 2000);
-  }, []);
 
   return (
     <View style={style.row} onLayout={changeItemWidth}>
@@ -245,7 +243,7 @@ const SelectTime = () => {
           { length: 60 / minuteInterval },
           (x, i) => i * minuteInterval,
         )}
-        onChange={(minute: number) => setTime({ ...time, minute })}
+        onChange={(_minute: number) => setTime({ ...time, minute: _minute })}
       />
       <View style={style.footer}>
         <RNBounceable style={style.button} onPress={selectTime}>

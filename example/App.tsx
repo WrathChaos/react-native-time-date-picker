@@ -1,8 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import moment from "moment";
-import { TimeDatePicker } from "./lib/TimeDatePicker/TimeDatePicker";
-import { Modes } from "./lib/utils";
+import { TimeDatePicker, Modes } from "./lib/index";
 
 interface AppProps {}
 

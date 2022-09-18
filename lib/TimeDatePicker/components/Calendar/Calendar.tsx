@@ -1,15 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Animated,
-  StyleProp,
-  ViewStyle,
-} from "react-native";
-/**
- * ? Local Imports
- */
+import { View, Text, Animated, StyleProp, ViewStyle } from "react-native";
 import { styles } from "./Calendar.style";
 import { Header, Days } from "..";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";

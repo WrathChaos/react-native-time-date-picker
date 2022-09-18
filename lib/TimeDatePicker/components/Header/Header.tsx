@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Animated, I18nManager, Image, Text, View } from "react-native";
 import RNBounceable from "@freakycoder/react-native-bounceable";
-
 import { styles } from "./Header.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
-import { Modes } from "../../../utils";
+import { Modes } from "../../../utils/types";
 
 interface HeaderProps {
   changeMonth: (type: string) => void;

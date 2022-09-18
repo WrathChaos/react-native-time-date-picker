@@ -10,10 +10,9 @@ import {
 } from "react-native";
 import moment from "moment";
 import RNBounceable from "@freakycoder/react-native-bounceable";
-
 import { styles } from "./SelectMonth.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
-import { Modes } from "../../../utils";
+import { Modes } from "../../../utils/types";
 
 const SelectMonth = () => {
   const {

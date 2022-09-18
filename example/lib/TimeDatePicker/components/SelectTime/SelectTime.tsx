@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Animated,
+  Text,
+  View,
   Easing,
   FlatList,
+  Animated,
   I18nManager,
-  Text,
-  TouchableOpacity,
-  View,
 } from "react-native";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 import { styles } from "./SelectTime.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
-import { Modes } from "../../../utils";
-import RNBounceable from "@freakycoder/react-native-bounceable";
+import { Modes } from "../../../utils/types";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -244,7 +243,7 @@ const SelectTime = () => {
           { length: 60 / minuteInterval },
           (x, i) => i * minuteInterval,
         )}
-        onChange={(minute: number) => setTime({ ...time, minute })}
+        onChange={(_minute: number) => setTime({ ...time, minute: _minute })}
       />
       <View style={style.footer}>
         <RNBounceable style={style.button} onPress={selectTime}>

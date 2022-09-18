@@ -105,26 +105,56 @@ should work of the example project.
 
 ## Fundamentals
 
-| Property    |  Type  |  Default  | Description           |
-| ----------- | :----: | :-------: | --------------------- |
-| title       | string | undefined | change the title      |
-| description | string | undefined | change the descrition |
+| Property     |   Type   |  Default   | Description                                                                                          |
+|--------------|:--------:|:----------:|------------------------------------------------------------------------------------------------------|
+| mode         |  Modes   | Modes.date | change the picker's main component (options: Modes.date, Modes.time, Modes.monthYear, Modes.calendar |
+| currentDate  |   Date   | new Date() | set the current date which initially visible month                                                   |
+| selectedDate |  string  | undefined  | set the selected date which primarly value of date picker                                            |
+| onSelectedChange | function |  default   | set your own logic when the date is selected                                                         |
+| onTimeChange | function |  default   | set your own logic when the time is changed                                                          |
+| onMonthYearChange | function |  default   | set your own logic when the month year is selected                                                   |
 
 ## Customization (Optionals)
 
-| Property       |   Type    |  Default  | Description                                                            |
-| -------------- | :-------: | :-------: | ---------------------------------------------------------------------- |
-| enableButton   |  boolean  |   false   | let you enable the button (must use it for button)                     |
-| onPress        | function  | undefined | set your own logic for the button functionality when it is pressed     |
-| buttonText     |  string   | undefined | change the button's text                                               |
-| style          | ViewStyle |  default  | set or override the style object for the main container                |
-| buttonStyle    | ViewStyle |  default  | set or override the style object for the button style                  |
-| ImageComponent |   Image   |  default  | set your own component instead of default react-native Image component |
+| Property       |   Type    | Default | Description                                                            |
+|----------------|:---------:|:-------:|------------------------------------------------------------------------|
+| style          | ViewStyle | default | set or override the style object for the main container                |
+| minimumDate    |  string   | default | set the minimum selectable day from user                               |
+| maximumDate    |  string   | default | set the maximum selectable day from user                               |
+| selectorStartingYear        |  number   |    0    | change the minimum selectable year for year picker                     |
+| selectorEndingYear        |  number   |    0    | change the maximum selectable year for year picker                     |
+| disableDateChange     |  boolean  |  false  | disable the month & year from being changed                            |
+
+## Customization for Options Prop
+
+```js
+const defaultOptions: IOptions ={
+    backgroundColor: "#fff",
+    textHeaderColor: "#241523",
+    textDefaultColor: "#432d50",
+    selectedTextColor: "#fff",
+    mainColor: "#aa7ff9",
+    textSecondaryColor: "#967aa5",
+    borderColor: "rgba(53, 33, 52, 0.1)",
+    defaultFont: "System",
+    headerFont: "System",
+    textFontSize: 15,
+    textHeaderFontSize: 17,
+    headerAnimationDistance: 100,
+    daysAnimationDistance: 200,
+    daysStyle: {},
+    is24Hour: true,
+};
+
+```
+
 
 ## Future Plans
 
 - [x] ~~LICENSE~~
 - [ ] Better integration with date timestamp (number) based
+- [ ] Better Documentation
+- [ ] Website
 - [ ] Write an article about the lib on Medium
 
 

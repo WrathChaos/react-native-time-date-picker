@@ -1,16 +1,24 @@
 import React, { useState, useMemo } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text } from "react-native";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 import { styles } from "./Days.style";
-import { useCalendar } from "../../TimeDatePicker";
+import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 
-const Days = (factory, deps) => {
-  const { options, state, utils, onDateChange } = useCalendar();
+const Days = () => {
+  const {
+    state,
+    utils,
+    options = defaultOptions,
+    onDateChange,
+  } = useCalendar();
   const [mainState, setMainState] = state;
   const [itemSize, setItemSize] = useState(0);
   const style = styles(options);
-  const days = useMemo(() => utils.getMonthDays(mainState.activeDate), deps);
+  // @ts-ignore
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const days = useMemo(() => utils.getMonthDays(mainState.activeDate));
 
-  const onSelectDay = (date) => {
+  const onSelectDay = (date: string | undefined) => {
     setMainState({
       type: "set",
       selectedDate: date,
@@ -18,32 +26,36 @@ const Days = (factory, deps) => {
     onDateChange?.(utils.getFormatted(utils.getDate(date), "dateFormat"));
   };
 
+  // @ts-ignore
   const changeItemHeight = ({ nativeEvent }) => {
     const { width } = nativeEvent.layout;
     !itemSize && setItemSize(width / 7 - 0.5);
   };
 
   return (
-    <View style={style.container} onLayout={changeItemHeight}>
-      {days.map((day, n) => (
+    <View
+      style={[style.container, { flexDirection: "row" }]}
+      onLayout={changeItemHeight}
+    >
+      {days.map((day, index) => (
         <View
-          key={n}
+          key={index}
           style={{
             width: itemSize,
             height: itemSize,
           }}
         >
           {day && (
-            <TouchableOpacity
+            <RNBounceable
               style={[
                 style.dayItem,
                 {
                   borderRadius: itemSize / 2,
                 },
+                options.daysStyle,
                 mainState.selectedDate === day.date && style.dayItemSelected,
               ]}
               onPress={() => !day.disabled && onSelectDay(day.date)}
-              activeOpacity={0.8}
             >
               <Text
                 style={[
@@ -54,7 +66,7 @@ const Days = (factory, deps) => {
               >
                 {day.dayString}
               </Text>
-            </TouchableOpacity>
+            </RNBounceable>
           )}
         </View>
       ))}

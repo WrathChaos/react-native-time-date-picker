@@ -1,4 +1,4 @@
-import { ViewStyle, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { IOptions } from "../../../utils";
 
 export const styles = (theme: IOptions) =>
@@ -7,12 +7,14 @@ export const styles = (theme: IOptions) =>
       width: "100%",
       height: "100%",
       flexWrap: "wrap",
+      left: 5,
     },
     dayItem: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
       margin: 3,
+      borderColor: theme.borderColor,
+      alignItems: "center",
+      justifyContent: "center",
     },
     dayItemSelected: {
       backgroundColor: theme.mainColor,

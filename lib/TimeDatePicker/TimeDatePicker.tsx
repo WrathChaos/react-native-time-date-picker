@@ -4,23 +4,25 @@ import { StyleSheet, View } from "react-native";
 import { Calendar, SelectMonth, SelectTime } from "./components";
 import { IOptions, ITimeDatePickerProps, Modes, utils } from "../utils";
 
-const options = {
+export const defaultOptions = {
   backgroundColor: "#fff",
-  textHeaderColor: "#212c35",
-  textDefaultColor: "#2d4150",
+  textHeaderColor: "#241523",
+  textDefaultColor: "#432d50",
   selectedTextColor: "#fff",
-  mainColor: "#61dafb",
-  textSecondaryColor: "#7a92a5",
-  borderColor: "rgba(122, 146, 165, 0.1)",
+  mainColor: "#aa7ff9",
+  textSecondaryColor: "#967aa5",
+  borderColor: "rgba(53, 33, 52, 0.1)",
   defaultFont: "System",
   headerFont: "System",
   textFontSize: 15,
   textHeaderFontSize: 17,
   headerAnimationDistance: 100,
   daysAnimationDistance: 200,
+  daysStyle: {},
+  is24Hour: true,
 };
 
-const reducer = (state, action) => {
+const reducer = (state: any, action: any) => {
   switch (action.type) {
     case "set":
       return { ...state, ...action };
@@ -51,21 +53,12 @@ const TimeDatePicker: React.FC<ITimeDatePickerProps> = (props) => {
     currentDate = new Date(),
     selectedDate,
     mode = Modes.date,
-    selectorStartingYear = 0,
-    selectorEndingYear = 3000,
-    disableDateChange = false,
-    minuteInterval = 5,
-    onSelectedChange,
-    onMonthYearChange,
-    onTimeChange,
-    onDateChange,
-    translation = "en",
   } = props;
   const calendarUtils = new utils(props);
 
   const contextValue: IContextValueProps = {
     ...props,
-    options: { ...options, ...props.options },
+    options: { ...defaultOptions, ...props.options },
     utils: calendarUtils,
     state: useReducer(reducer, {
       activeDate: currentDate || calendarUtils.getToday(),
@@ -76,8 +69,6 @@ const TimeDatePicker: React.FC<ITimeDatePickerProps> = (props) => {
       timeOpen: mode === Modes.time,
     }),
   };
-
-  console.log("ContextValue: ", contextValue);
 
   const [minHeight, setMinHeight] = useState(300);
   const _style = styles(contextValue.options);

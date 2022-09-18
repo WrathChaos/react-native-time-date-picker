@@ -12,16 +12,21 @@ import {
  */
 import { styles } from "./Calendar.style";
 import { Header, Days } from "..";
-import { useCalendar } from "../../TimeDatePicker";
+import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 
 export interface CalendarProps {
   calendarStyle?: StyleProp<ViewStyle>;
 }
 
 const Calendar: React.FC<CalendarProps> = ({ calendarStyle }) => {
-  const { options, state, utils, onSelectedChange } = useCalendar();
+  const {
+    options = defaultOptions,
+    state,
+    utils,
+    onSelectedChange,
+  } = useCalendar();
   const [mainState] = state;
-  const style = styles([options, calendarStyle]);
+  const style = styles(options);
   const [{ shownAnimation }, changeMonthAnimation] = utils.useMonthAnimation(
     mainState.activeDate,
     options.daysAnimationDistance,
@@ -32,10 +37,10 @@ const Calendar: React.FC<CalendarProps> = ({ calendarStyle }) => {
   }, [mainState.selectedDate, onSelectedChange]);
 
   return (
-    <View style={style.container}>
+    <View style={[style.container, calendarStyle]}>
       <Header changeMonth={changeMonthAnimation} />
-      <View style={style.daysName}>
-        {utils.config.translation.dayNamesShort.map((item) => (
+      <View style={[style.daysName, { flexDirection: "row" }]}>
+        {utils.config.dayNamesShort.map((item) => (
           <Text key={item} style={style.daysNameText}>
             {item}
           </Text>

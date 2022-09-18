@@ -6,21 +6,22 @@ import {
   Image,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
+import moment from "moment";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 
 import { styles } from "./SelectMonth.style";
-import { useCalendar } from "../../TimeDatePicker";
+import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 import { Modes } from "../../../utils";
 
 const SelectMonth = () => {
   const {
-    options,
+    options = defaultOptions,
     state,
     utils,
-    selectorStartingYear,
-    selectorEndingYear,
+    selectorStartingYear = 0,
+    selectorEndingYear = 3000,
     mode,
     minimumDate,
     maximumDate,
@@ -33,11 +34,11 @@ const SelectMonth = () => {
     utils.getMonthYearText(mainState.activeDate).split(" ")[1],
   );
   const openAnimation = useRef(new Animated.Value(0)).current;
-  const currentMonth = Number(mainState.activeDate.split("/")[1]);
+  const currentMonth = Number(moment(mainState.activeDate).month() + 1);
   const prevDisable =
     (maximumDate &&
       utils.checkYearDisabled(Number(utils.getConvertedNumber(year)), true)) ||
-    true;
+    false;
   const nextDisable =
     (minimumDate &&
       utils.checkYearDisabled(Number(utils.getConvertedNumber(year)), false)) ||
@@ -59,14 +60,15 @@ const SelectMonth = () => {
     show && setYear(utils.getMonthYearText(mainState.activeDate).split(" ")[1]);
   }, [mainState.activeDate, utils, show]);
 
-  const onSelectMonth = (month) => {
+  const onSelectMonth = (month: number | null) => {
     if (show) {
       let y = Number(utils.getConvertedNumber(year));
       const date = utils.getDate(utils.validYear(mainState.activeDate, y));
       const activeDate = month !== null ? date.month(month) : date;
+
       setMainState({
         type: "set",
-        activeDate: utils.getFormatted(activeDate),
+        activeDate,
       });
       month !== null &&
         onMonthYearChange(utils.getFormatted(activeDate, "monthYearFormat"));
@@ -83,20 +85,20 @@ const SelectMonth = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevDisable, nextDisable]);
 
-  const onChangeYear = (text) => {
+  const onChangeYear = (text: string) => {
     if (Number(utils.getConvertedNumber(text))) {
       setYear(utils.getConvertedNumber(text));
     }
   };
 
-  const onSelectYear = (number) => {
-    let y = Number(utils.getConvertedNumber(year)) + number;
+  const onSelectYear = (val: number) => {
+    let y = Number(utils.getConvertedNumber(year)) + val;
     if (y > selectorEndingYear) {
       y = selectorEndingYear;
     } else if (y < selectorStartingYear) {
       y = selectorStartingYear;
     }
-    setYear(utils.getConvertedNumber(y));
+    setYear(utils.getConvertedNumber(String(y)));
   };
 
   const containerStyle = [
@@ -117,8 +119,7 @@ const SelectMonth = () => {
   return show ? (
     <Animated.View style={containerStyle}>
       <View style={[style.header, I18nManager.isRTL && style.reverseHeader]}>
-        <TouchableOpacity
-          activeOpacity={0.7}
+        <RNBounceable
           style={style.arrowWrapper}
           onPress={() => !nextDisable && onSelectYear(-1)}
         >
@@ -130,7 +131,7 @@ const SelectMonth = () => {
               nextDisable && style.disableArrow,
             ]}
           />
-        </TouchableOpacity>
+        </RNBounceable>
         <TextInput
           style={style.yearInput}
           keyboardType="numeric"
@@ -144,8 +145,7 @@ const SelectMonth = () => {
           selectionColor={options.mainColor}
           onChangeText={onChangeYear}
         />
-        <TouchableOpacity
-          activeOpacity={0.7}
+        <RNBounceable
           style={style.arrowWrapper}
           onPress={() => !prevDisable && onSelectYear(+1)}
         >
@@ -153,19 +153,19 @@ const SelectMonth = () => {
             source={require("../../../assets/arrow.png")}
             style={[style.arrow, prevDisable && style.disableArrow]}
           />
-        </TouchableOpacity>
+        </RNBounceable>
       </View>
 
-      <View style={style.monthList}>
+      <View style={[style.monthList, { flexDirection: "row" }]}>
         {[...Array(12).keys()].map((item) => {
           const disabled = utils.checkSelectMonthDisabled(
             mainState.activeDate,
             item,
           );
+
           return (
-            <TouchableOpacity
+            <RNBounceable
               key={item}
-              activeOpacity={0.8}
               style={[
                 style.item,
                 currentMonth === item + 1 && style.selectedItem,
@@ -181,7 +181,7 @@ const SelectMonth = () => {
               >
                 {utils.getMonthName(item)}
               </Text>
-            </TouchableOpacity>
+            </RNBounceable>
           );
         })}
       </View>

@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
+import { IOptions } from "../../../utils";
 
-export const styles = (theme) =>
+export const styles = (theme: IOptions) =>
   StyleSheet.create({
     container: {
       flexDirection: "column",
@@ -12,7 +13,7 @@ export const styles = (theme) =>
       alignItems: "center",
       justifyContent: "space-around",
       borderBottomColor: theme.borderColor,
-      borderBottomWidth: 1,
+      borderBottomWidth: 0.5,
       marginHorizontal: 15,
     },
     daysNameText: {

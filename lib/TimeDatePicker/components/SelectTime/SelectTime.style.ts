@@ -24,6 +24,7 @@ export const styles = (theme: IOptions) =>
       fontSize: theme.textHeaderFontSize,
       color: theme.mainColor,
       fontFamily: theme.headerFont,
+      marginBottom: 12,
     },
     listItem: {
       height: 60,

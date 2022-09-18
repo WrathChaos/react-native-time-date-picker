@@ -3,25 +3,19 @@ import { Animated, Easing, StyleProp, ViewStyle } from "react-native";
 import moment, { Moment } from "moment";
 import * as translations from "./translations";
 import { ITranslation } from "./translations";
-import {
-  FORMATTED_DATE,
-  NEXT,
-  SELECTED_FORMAT,
-  MINUTE_INTERVAL_ARRAY,
-} from "./defaults.constants";
-import PropTypes from "prop-types";
-import AnimatedProps = Animated.AnimatedProps;
+import { FORMATTED_DATE, NEXT, SELECTED_FORMAT } from "./defaults.constants";
+
+const m = moment();
 
 export interface IMinMaxDates {
   minimumDate?: string;
   maximumDate?: string;
 }
 
-export interface IConfig {
+export interface IConfig extends ITranslation {
   selectedFormat: string;
   dateFormat: string;
   timeFormat: string;
-  translation: ITranslation;
 }
 
 export enum Modes {
@@ -36,13 +30,13 @@ export interface ITimeDatePickerProps extends IMinMaxDates {
   translation?: string;
   configs?: IConfig;
   style?: StyleProp<ViewStyle>;
-  options: IOptions;
+  options?: IOptions;
   currentDate?: string;
   selectedDate?: string;
-  selectorStartingYear: number;
-  selectorEndingYear: number;
+  selectorStartingYear?: number;
+  selectorEndingYear?: number;
   disableDateChange?: boolean;
-  minuteInterval: number;
+  minuteInterval?: number;
   onSelectedChange: (selectedDay: number[]) => void;
   onMonthYearChange: (monthYear: string) => void;
   onTimeChange: (time: string) => void;
@@ -50,19 +44,21 @@ export interface ITimeDatePickerProps extends IMinMaxDates {
 }
 
 export interface IOptions {
-  backgroundColor: string;
-  textHeaderColor: string;
-  textDefaultColor: string;
-  selectedTextColor: string;
-  mainColor: string;
-  textSecondaryColor: string;
-  borderColor: string;
-  defaultFont: string;
-  headerFont: string;
-  textFontSize: number;
-  textHeaderFontSize: number;
-  headerAnimationDistance: number;
-  daysAnimationDistance: number;
+  backgroundColor?: string;
+  textHeaderColor?: string;
+  textDefaultColor?: string;
+  selectedTextColor?: string;
+  mainColor?: string;
+  textSecondaryColor?: string;
+  borderColor?: string;
+  defaultFont?: string;
+  headerFont?: string;
+  textFontSize?: number;
+  textHeaderFontSize?: number;
+  headerAnimationDistance?: number;
+  daysAnimationDistance?: number;
+  daysStyle?: StyleProp<ViewStyle>;
+  is24Hour?: boolean;
 }
 
 export interface IDay {
@@ -74,6 +70,7 @@ export interface IDay {
 class utils {
   minMaxDates: IMinMaxDates;
   config: IConfig;
+  translationConfig: ITranslation;
 
   constructor(props: ITimeDatePickerProps) {
     const {
@@ -87,36 +84,44 @@ class utils {
       minimumDate,
       maximumDate,
     };
-    this.config = translations[translation];
-    this.config = { ...this.config, ...configs };
+    // @ts-ignore
+    this.translationConfig = translations[translation];
+    this.config = { ...this.translationConfig, ...configs };
     if (mode === Modes.time || mode === Modes.date) {
       this.config.selectedFormat =
         this.config.dateFormat + " " + this.config.timeFormat;
     }
   }
 
-  getFormatted = (date: Moment, formatName = SELECTED_FORMAT): string =>
-    date.format(this.config[formatName]);
+  getFormatted = (date: Moment, formatName = SELECTED_FORMAT): string => {
+    // @ts-ignore
+    return date.format(this.config[formatName]);
+  };
 
   getFormattedDate = (date = new Date(), format = FORMATTED_DATE) =>
     moment(date).format(format);
 
   getTime = (time: string) => this.getDate(time).format(this.config.timeFormat);
 
-  getToday = () => this.getFormatted(moment(), "dateFormat");
+  getToday = () => this.getFormatted(m, "dateFormat");
 
-  getMonthName = (month: number) => this.config.translation.monthNames[month];
+  getMonthName = (month: number) => this.config.monthNames[month];
 
-  getConvertedNumber = (value) => {
-    const charCodeZero = "۰".charCodeAt(0);
-    return value.replace(/[۰-۹]/g, (w) => w.charCodeAt(0) - charCodeZero);
+  getConvertedNumber = (value: string) => {
+    if (value) {
+      const charCodeZero = "۰".charCodeAt(0);
+      return value.replace(/[۰-۹]/g, (w) =>
+        String(w.charCodeAt(0) - charCodeZero),
+      );
+    }
+    return "";
   };
 
   getDate = (time?: string) => moment(time, this.config.selectedFormat);
 
   getMonthYearText = (time: string) => {
     const date = this.getDate(time);
-    const year = this.getConvertedNumber(date.year());
+    const year = this.getConvertedNumber(date.year().toString());
     const month = this.getMonthName(date.month());
     return `${month} ${year}`;
   };
@@ -188,7 +193,7 @@ class utils {
 
         date = this.getDate(time);
         return {
-          dayString: this.getConvertedNumber(n + 1),
+          dayString: this.getConvertedNumber(String(n + 1)),
           day: n + 1,
           date: this.getFormatted(date.date(n + 1)),
           disabled,
@@ -200,13 +205,13 @@ class utils {
   useMonthAnimation = (
     activeDate: number,
     distance: number,
-    onEnd: () => void,
+    onEnd?: () => void,
   ): any => {
     const [lastDate, setLastDate] = useState(activeDate);
-    const [changeWay, setChangeWay] = useState(null);
+    const [changeWay, setChangeWay] = useState<string | null>(null);
     const monthYearAnimation = useRef(new Animated.Value(0)).current;
 
-    const changeMonthAnimation = (type) => {
+    const changeMonthAnimation = (type: string) => {
       setChangeWay(type);
       setLastDate(activeDate);
       monthYearAnimation.setValue(1);
@@ -218,7 +223,7 @@ class utils {
       }).start(onEnd);
     };
 
-    const shownAnimation: Animated.AnimatedProps<StyleProp<ViewStyle>> = {
+    const shownAnimation = {
       opacity: monthYearAnimation.interpolate({
         inputRange: [0, 1],
         outputRange: [1, 1],
@@ -233,7 +238,7 @@ class utils {
       ],
     };
 
-    const hiddenAnimation: Animated.AnimatedProps<StyleProp<ViewStyle>> = {
+    const hiddenAnimation = {
       opacity: monthYearAnimation,
       transform: [
         {
@@ -244,11 +249,6 @@ class utils {
         },
       ],
     };
-
-    const hello = [
-      { lastDate, shownAnimation, hiddenAnimation },
-      changeMonthAnimation,
-    ];
 
     return [
       { lastDate, shownAnimation, hiddenAnimation },

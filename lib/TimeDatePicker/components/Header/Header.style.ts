@@ -58,6 +58,7 @@ export const styles = (theme: IOptions) =>
       padding: 2,
       color: theme.textHeaderColor,
       fontFamily: theme.defaultFont,
+      fontWeight: "500",
       textAlignVertical: "center",
     },
     monthText: {
@@ -68,7 +69,7 @@ export const styles = (theme: IOptions) =>
       paddingVertical: 4,
       paddingHorizontal: 8,
       alignItems: "center",
-      borderRadius: 5,
+      borderRadius: 12,
       borderWidth: 1,
     },
     time: {

@@ -9,45 +9,54 @@ import {
   View,
 } from "react-native";
 import { styles } from "./SelectTime.style";
-import { useCalendar } from "../../TimeDatePicker";
+import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 import { Modes } from "../../../utils";
+import RNBounceable from "@freakycoder/react-native-bounceable";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
+// @ts-ignore
 const TimeScroller = ({ title, data, onChange }) => {
-  const { options, utils } = useCalendar();
+  const { options = defaultOptions, utils } = useCalendar();
   const [itemSize, setItemSize] = useState(0);
   const style = styles(options);
   const scrollAnimatedValue = useRef(new Animated.Value(0)).current;
-  const scrollListener = useRef();
+  const scrollListener = useRef("0");
   const active = useRef(0);
   data = ["", "", ...data, "", ""];
+  const flatListRef = useRef();
 
   useEffect(() => {
-    if (scrollListener.current) {
-      clearInterval(scrollListener.current);
-      // @ts-ignore
-      scrollListener.current = scrollAnimatedValue.addListener(
-        ({ value }) => (active.current = value),
-      );
-    }
+    scrollListener.current && clearInterval(Number(scrollListener.current));
+    scrollListener.current = scrollAnimatedValue.addListener(
+      ({ value }) => (active.current = value),
+    );
 
     return () => {
-      clearInterval(scrollListener.current);
+      clearInterval(Number(scrollListener.current));
     };
   }, [scrollAnimatedValue]);
 
+  useEffect(() => {
+    flatListRef.current.scrollToOffset({
+      animated: true,
+      offset: 9 * itemSize,
+    });
+  });
+
+  // @ts-ignore
   const changeItemWidth = ({ nativeEvent }) => {
     const { width } = nativeEvent.layout;
     !itemSize && setItemSize(width / 5);
   };
 
+  // @ts-ignore
   const renderItem = ({ item, index }) => {
-    const makeAnimated = (a, b, c) => {
+    const makeAnimated = (a: number, b: number, c: number) => {
       return {
-        inputRange: [...data.map((_, i) => i * itemSize)],
+        inputRange: [...data.map((_: any, i: number) => i * itemSize)],
         outputRange: [
-          ...data.map((_, i) => {
+          ...data.map((_: any, i: number) => {
             const center = i + 2;
             if (center === index) {
               return a;
@@ -62,38 +71,60 @@ const TimeScroller = ({ title, data, onChange }) => {
     };
 
     return (
-      <Animated.View
-        style={[
-          {
-            width: itemSize,
-            opacity: scrollAnimatedValue.interpolate(makeAnimated(1, 0.6, 0.3)),
-            transform: [
-              {
-                scale: scrollAnimatedValue.interpolate(
-                  makeAnimated(1.2, 0.9, 0.8),
-                ),
-              },
-              {
-                scaleX: I18nManager.isRTL ? -1 : 1,
-              },
-            ],
-          },
-          style.listItem,
-        ]}
+      <RNBounceable
+        onPress={() => {
+          // @ts-ignore
+          flatListRef.current.scrollToOffset({
+            animated: true,
+            offset: item * itemSize,
+          });
+        }}
       >
-        <Text style={style.listItemText}>
-          {utils.getConvertedNumber(
-            String(item).length === 1 ? "0" + item : item,
-          )}
-        </Text>
-      </Animated.View>
+        <Animated.View
+          style={[
+            {
+              width: itemSize,
+              opacity: scrollAnimatedValue.interpolate(
+                makeAnimated(1, 0.6, 0.2),
+              ),
+              transform: [
+                {
+                  scale: scrollAnimatedValue.interpolate(
+                    makeAnimated(2, 0.9, 0.8),
+                  ),
+                },
+                {
+                  scaleX: I18nManager.isRTL ? -1 : 1,
+                },
+              ],
+            },
+            style.listItem,
+          ]}
+        >
+          <Text style={[style.listItemText]}>
+            {utils.getConvertedNumber(
+              String(item).length === 1 ? "0" + String(item) : String(item),
+            )}
+          </Text>
+        </Animated.View>
+      </RNBounceable>
     );
   };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      flatListRef.current?.scrollToOffset({
+        animated: true,
+        offset: 9 * itemSize,
+      });
+    }, 2000);
+  }, []);
 
   return (
     <View style={style.row} onLayout={changeItemWidth}>
       <Text style={style.title}>{title}</Text>
       <AnimatedFlatList
+        ref={flatListRef}
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         horizontal
@@ -129,17 +160,18 @@ const TimeScroller = ({ title, data, onChange }) => {
 
 const SelectTime = () => {
   const {
-    options,
+    options = defaultOptions,
     state,
     utils,
-    minuteInterval,
+    minuteInterval = 1,
     mode,
     onTimeChange,
   } = useCalendar();
   const [mainState, setMainState] = state;
+  const minute = options.is24Hour ? 0 : 1;
   const [show, setShow] = useState(false);
   const [time, setTime] = useState({
-    minute: 0,
+    minute: minute,
     hour: 0,
   });
   const style = styles(options);
@@ -148,10 +180,10 @@ const SelectTime = () => {
   useEffect(() => {
     show &&
       setTime({
-        minute: 0,
+        minute: minute,
         hour: 0,
       });
-  }, [show]);
+  }, [show, minute]);
 
   useEffect(() => {
     mainState.timeOpen && setShow(true);
@@ -205,42 +237,38 @@ const SelectTime = () => {
   return show ? (
     <Animated.View style={containerStyle}>
       <TimeScroller
-        title={utils.config.translation.hour}
-        data={Array.from({ length: 24 }, (x, i) => i)}
-        onChange={(hour) => setTime({ ...time, hour })}
+        title={utils.config.hour}
+        data={Array.from(
+          { length: options.is24Hour ? 24 : 12 },
+          (x, i) => i + (options.is24Hour ? 0 : 1),
+        )}
+        onChange={(hour: number) => {
+          setTime({ ...time, hour });
+        }}
       />
       <TimeScroller
-        title={utils.config.translation.minute}
+        title={utils.config.minute}
         data={Array.from(
           { length: 60 / minuteInterval },
           (x, i) => i * minuteInterval,
         )}
-        onChange={(minute) => setTime({ ...time, minute })}
+        onChange={(minute: number) => setTime({ ...time, minute })}
       />
       <View style={style.footer}>
-        <TouchableOpacity
-          style={style.button}
-          activeOpacity={0.8}
-          onPress={selectTime}
-        >
-          <Text style={style.btnText}>
-            {utils.config.translation.timeSelect}
-          </Text>
-        </TouchableOpacity>
+        <RNBounceable style={style.button} onPress={selectTime}>
+          <Text style={style.btnText}>{utils.config.timeSelect}</Text>
+        </RNBounceable>
         {mode !== Modes.time && (
-          <TouchableOpacity
+          <RNBounceable
             style={[style.button, style.cancelButton]}
             onPress={() =>
               setMainState({
                 type: "toggleTime",
               })
             }
-            activeOpacity={0.8}
           >
-            <Text style={style.btnText}>
-              {utils.config.translation.timeClose}
-            </Text>
-          </TouchableOpacity>
+            <Text style={style.btnText}>{utils.config.timeClose}</Text>
+          </RNBounceable>
         )}
       </View>
     </Animated.View>

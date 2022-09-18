@@ -21,6 +21,14 @@
         src="assets/Screenshots/month-picker.gif" />
 </p>
 
+# Documentation 
+
+- [Getting Started](https://github.com/WrathChaos/react-native-time-date-picker#installation)
+- [Usage](https://github.com/WrathChaos/react-native-time-date-picker#usage)
+- [Configuration](https://github.com/WrathChaos/react-native-time-date-picker#configuration---props)
+- [Localization](./docs/translations.md)
+- [Localization Contribution][./docs/contributions/translations.md]
+
 
 # Installation
 
@@ -151,6 +159,7 @@ const defaultOptions: IOptions ={
 ## Credits
 
 Heavily inspired by [react-native-modern-datepicker](https://github.com/HosseinShabani/react-native-modern-datepicker)
+
 Re-written whole structure with Typescript and enhanced with lots of ways with better coding, types and localization
 
 ## Future Plans

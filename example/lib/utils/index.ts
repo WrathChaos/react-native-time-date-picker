@@ -58,6 +58,7 @@ export interface IOptions {
   headerAnimationDistance?: number;
   daysAnimationDistance?: number;
   daysStyle?: StyleProp<ViewStyle>;
+  is24Hour?: boolean;
 }
 
 export interface IDay {

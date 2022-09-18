@@ -19,6 +19,7 @@ export const defaultOptions = {
   headerAnimationDistance: 100,
   daysAnimationDistance: 200,
   daysStyle: {},
+  is24Hour: true,
 };
 
 const reducer = (state: any, action: any) => {

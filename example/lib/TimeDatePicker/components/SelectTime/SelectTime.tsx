@@ -221,7 +221,10 @@ const SelectTime = () => {
     <Animated.View style={containerStyle}>
       <TimeScroller
         title={utils.config.hour}
-        data={Array.from({ length: 24 }, (x, i) => i)}
+        data={Array.from(
+          { length: options.is24Hour ? 24 : 12 },
+          (x, i) => i + (options.is24Hour ? 0 : 1),
+        )}
         onChange={(hour: number) => {
           setTime({ ...time, hour });
         }}

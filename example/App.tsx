@@ -31,6 +31,7 @@ const App: React.FC<AppProps> = () => {
             borderWidth: 0.5,
             borderColor: "#f1f1f1",
           },
+          is24Hour: false,
         }}
       />
     </View>

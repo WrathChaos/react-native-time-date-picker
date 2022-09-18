@@ -19,7 +19,7 @@ const Calendar: React.FC<CalendarProps> = ({ calendarStyle }) => {
   const style = styles(options);
   const [{ shownAnimation }, changeMonthAnimation] = utils.useMonthAnimation(
     mainState.activeDate,
-    options.daysAnimationDistance,
+    options.daysAnimationDistance || 200,
   );
 
   useEffect(() => {

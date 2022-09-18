@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
     changeMonthAnimation,
   ] = utils.useMonthAnimation(
     mainState.activeDate,
-    options.headerAnimationDistance,
+    options.headerAnimationDistance || 100,
     () => setDisableChange(false),
   );
   const prevDisable =

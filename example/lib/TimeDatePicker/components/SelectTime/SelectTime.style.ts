@@ -30,9 +30,6 @@ export const styles = (theme: IOptions) =>
       height: 60,
       alignItems: "center",
       justifyContent: "center",
-      borderLeftWidth: 0.5,
-      borderRightWidth: 0.5,
-      borderColor: theme.borderColor,
     },
     listItemText: {
       fontSize: theme.textHeaderFontSize,

@@ -18,6 +18,7 @@ export const defaultOptions = {
   textHeaderFontSize: 17,
   headerAnimationDistance: 100,
   daysAnimationDistance: 200,
+  daysStyle: {},
 };
 
 const reducer = (state: any, action: any) => {

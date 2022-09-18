@@ -10,9 +10,10 @@ export const styles = (theme: IOptions) =>
     },
     dayItem: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
       margin: 3,
+      borderColor: theme.borderColor,
+      alignItems: "center",
+      justifyContent: "center",
     },
     dayItemSelected: {
       backgroundColor: theme.mainColor,

@@ -44,19 +44,20 @@ export interface ITimeDatePickerProps extends IMinMaxDates {
 }
 
 export interface IOptions {
-  backgroundColor: string;
-  textHeaderColor: string;
-  textDefaultColor: string;
-  selectedTextColor: string;
-  mainColor: string;
-  textSecondaryColor: string;
-  borderColor: string;
-  defaultFont: string;
-  headerFont: string;
-  textFontSize: number;
-  textHeaderFontSize: number;
-  headerAnimationDistance: number;
-  daysAnimationDistance: number;
+  backgroundColor?: string;
+  textHeaderColor?: string;
+  textDefaultColor?: string;
+  selectedTextColor?: string;
+  mainColor?: string;
+  textSecondaryColor?: string;
+  borderColor?: string;
+  defaultFont?: string;
+  headerFont?: string;
+  textFontSize?: number;
+  textHeaderFontSize?: number;
+  headerAnimationDistance?: number;
+  daysAnimationDistance?: number;
+  daysStyle?: StyleProp<ViewStyle>;
 }
 
 export interface IDay {

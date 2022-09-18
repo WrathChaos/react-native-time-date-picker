@@ -52,6 +52,7 @@ const Days = () => {
                 {
                   borderRadius: itemSize / 2,
                 },
+                options.daysStyle,
                 mainState.selectedDate === day.date && style.dayItemSelected,
               ]}
               onPress={() => !day.disabled && onSelectDay(day.date)}

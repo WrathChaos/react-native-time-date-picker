@@ -7,7 +7,13 @@ interface AppProps {}
 
 const App: React.FC<AppProps> = () => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <TimeDatePicker
         onMonthYearChange={(month) => {
           console.log("month: ", month);
@@ -19,6 +25,13 @@ const App: React.FC<AppProps> = () => {
           console.log("time: ", time);
         }}
         mode={Modes.date}
+        options={{
+          daysStyle: {
+            borderRadius: 16,
+            borderWidth: 0.5,
+            borderColor: "#f1f1f1",
+          },
+        }}
       />
     </View>
   );

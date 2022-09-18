@@ -78,12 +78,12 @@ const TimeScroller = ({ title, data, onChange }) => {
             {
               width: itemSize,
               opacity: scrollAnimatedValue.interpolate(
-                makeAnimated(1, 0.6, 0.3),
+                makeAnimated(1, 0.6, 0.2),
               ),
               transform: [
                 {
                   scale: scrollAnimatedValue.interpolate(
-                    makeAnimated(1.2, 0.9, 0.8),
+                    makeAnimated(2, 0.9, 0.8),
                   ),
                 },
                 {

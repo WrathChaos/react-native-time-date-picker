@@ -67,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
         onPress={() => !nextDisable && onChangeMonth("NEXT")}
       >
         <Image
-          source={require("../../../assets/arrow.png")}
+          source={require("../../../local-assets/arrow.png")}
           style={[style.arrow, nextDisable && style.disableArrow]}
         />
       </RNBounceable>
@@ -147,7 +147,7 @@ const Header: React.FC<HeaderProps> = ({ changeMonth }) => {
         onPress={() => !prevDisable && onChangeMonth("PREVIOUS")}
       >
         <Image
-          source={require("../../../assets/arrow.png")}
+          source={require("../../../local-assets/arrow.png")}
           style={[
             style.arrow,
             style.leftArrow,

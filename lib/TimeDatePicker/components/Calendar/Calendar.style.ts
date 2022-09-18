@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { IOptions } from "../../../utils";
+import { IOptions } from "../../../utils/types";
 
 export const styles = (theme: IOptions) =>
   StyleSheet.create({

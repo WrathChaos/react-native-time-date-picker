@@ -1,6 +1,6 @@
 <img alt="React Native Time Date Picker" src="assets/logo.png" width="1050"/>
 
-[![React Native Time Date Picker](https://img.shields.io/badge/-Extremely%20easy%20to%20create%20a%20React%20Native%20Component%20Library%20with%20both%20Stateful%20and%20Functional%20Component%20Examples-orange?style=for-the-badge)](https://github.com/WrathChaos/react-native-time-date-picker)
+[![React Native Time Date Picker](https://img.shields.io/badge/-Easy%20to%20use%20time%20and%20date%20picker%20with%20lots%20of%20options%20for%20React%20Native.-orange?style=for-the-badge)](https://github.com/WrathChaos/react-native-time-date-picker)
 
 [![npm version](https://img.shields.io/npm/v/react-native-time-date-picker.svg?style=for-the-badge)](https://www.npmjs.com/package/react-native-time-date-picker)
 [![npm](https://img.shields.io/npm/dt/react-native-time-date-picker.svg?style=for-the-badge)](https://www.npmjs.com/package/react-native-time-date-picker)

@@ -123,7 +123,7 @@ const SelectMonth = () => {
           onPress={() => !nextDisable && onSelectYear(-1)}
         >
           <Image
-            source={require("../../../assets/arrow.png")}
+            source={require("../../../local-assets/arrow.png")}
             style={[
               style.arrow,
               style.leftArrow,
@@ -149,7 +149,7 @@ const SelectMonth = () => {
           onPress={() => !prevDisable && onSelectYear(+1)}
         >
           <Image
-            source={require("../../../assets/arrow.png")}
+            source={require("../../../local-assets/arrow.png")}
             style={[style.arrow, prevDisable && style.disableArrow]}
           />
         </RNBounceable>

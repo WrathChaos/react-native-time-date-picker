@@ -788,7 +788,7 @@
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
 
-"@freakycoder/react-native-bounceable@^1.0.3":
+"@freakycoder/react-native-bounceable@^1.0.3", "@freakycoder/react-native-bounceable@>= 1.0.3":
   "integrity" "sha512-+iMq2tnqxCwFjitbPUz9nZ+VfJ8OU9waIlDJAAsoq1229QEwCmERCNy5zVtDsz75q3i4FLXX/n7fimdMzmP21A=="
   "resolved" "https://registry.npmjs.org/@freakycoder/react-native-bounceable/-/react-native-bounceable-1.0.3.tgz"
   "version" "1.0.3"
@@ -5216,7 +5216,7 @@
   dependencies:
     "minimist" "^1.2.6"
 
-"moment@^2.29.4":
+"moment@^2.29.4", "moment@>= 2.29.4":
   "integrity" "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w=="
   "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
   "version" "2.29.4"
@@ -5847,6 +5847,14 @@
   "integrity" "sha512-oOanj84fJEXUg9FoEAQomA8ISG+DVIrTZ3qF7m69VQUJyOGYyDZmPqKcjvRku4KXlEH6hWO9i4ACLzNBh8gC0A=="
   "resolved" "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
   "version" "0.70.3"
+
+"react-native-time-date-picker@^0.1.4":
+  "integrity" "sha512-sMKEWOMlmjzTZ9BG3//j3IKLkqrOgeHNi60IqGbohyYfCfiFXJYCSvB3j1DkZONEivVjrwJRxSVhuQ7CIJjMnA=="
+  "resolved" "https://registry.npmjs.org/react-native-time-date-picker/-/react-native-time-date-picker-0.1.4.tgz"
+  "version" "0.1.4"
+  dependencies:
+    "@freakycoder/react-native-bounceable" ">= 1.0.3"
+    "moment" ">= 2.29.4"
 
 "react-native@0.70.1":
   "integrity" "sha512-AUh4NZLFdvyjSiYWCtTROCrC7loxeeZ/TzBnkZwp3kb9XmMu7/kzvWn2c5sEMnzW7X/0JSul8jXexGVdpnCoSA=="

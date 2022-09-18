@@ -27,7 +27,7 @@
 - [Usage](https://github.com/WrathChaos/react-native-time-date-picker#usage)
 - [Configuration](https://github.com/WrathChaos/react-native-time-date-picker#configuration---props)
 - [Localization](./docs/translations.md)
-- [Localization Contribution][./docs/contributions/translations.md]
+- [Localization Contribution](./docs/contributions/translations.md)
 
 
 # Installation

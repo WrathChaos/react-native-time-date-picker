@@ -27,14 +27,7 @@ const App: React.FC<AppProps> = () => {
         }}
         selectedDate={now}
         mode={Modes.date}
-        options={{
-          daysStyle: {
-            borderRadius: 16,
-            borderWidth: 0.5,
-            borderColor: "#f1f1f1",
-          },
-          is24Hour: false,
-        }}
+        options={{}}
       />
     </View>
   );

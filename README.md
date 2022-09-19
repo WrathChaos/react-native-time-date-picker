@@ -10,6 +10,10 @@
 
 <p align="center">
   <img alt="React Native Time Date Picker"
+        src="assets/Screenshots/date-picker-default.gif" />
+</p>
+<p align="center">
+  <img alt="React Native Time Date Picker"
         src="assets/Screenshots/date-picker.gif" />
 </p>
 <p align="center">
@@ -21,14 +25,13 @@
         src="assets/Screenshots/month-picker.gif" />
 </p>
 
-# Documentation 
+# Documentation
 
 - [Getting Started](https://github.com/WrathChaos/react-native-time-date-picker#installation)
 - [Usage](https://github.com/WrathChaos/react-native-time-date-picker#usage)
 - [Configuration](https://github.com/WrathChaos/react-native-time-date-picker#configuration---props)
 - [Localization](./docs/translations.md)
 - [Localization Contribution](./docs/contributions/translations.md)
-
 
 # Installation
 
@@ -58,43 +61,43 @@ import TimeDatePicker from "react-native-time-date-picker";
 ## Fundamental Usage
 
 ```jsx
- <TimeDatePicker
-    selectedDate={now}
-    onMonthYearChange={(month) => {
-        console.log("month: ", month);
-    }}
-    onSelectedChange={(selected) => {
-        console.log("selected: ", selected);
-    }}
-    onTimeChange={(time) => {
-        console.log("time: ", time);
-    }}
+<TimeDatePicker
+  selectedDate={now}
+  onMonthYearChange={(month) => {
+    console.log("month: ", month);
+  }}
+  onSelectedChange={(selected) => {
+    console.log("selected: ", selected);
+  }}
+  onTimeChange={(time) => {
+    console.log("time: ", time);
+  }}
 />
 ```
 
 ## Customization Example Usage
 
 ```jsx
-  <TimeDatePicker
-    selectedDate={now}
-    mode={Modes.time}
-    options={{
-        daysStyle: {
-            borderRadius: 16,
-            borderWidth: 0.5,
-            borderColor: "#f1f1f1",
-        },
-        is24Hour: false,
-    }}
-    onMonthYearChange={(month) => {
-        console.log("month: ", month);
-    }}
-    onSelectedChange={(selected) => {
-        console.log("selected: ", selected);
-    }}
-    onTimeChange={(time) => {
-        console.log("time: ", time);
-    }}
+<TimeDatePicker
+  selectedDate={now}
+  mode={Modes.time}
+  options={{
+    daysStyle: {
+      borderRadius: 16,
+      borderWidth: 0.5,
+      borderColor: "#f1f1f1",
+    },
+    is24Hour: false,
+  }}
+  onMonthYearChange={(month) => {
+    console.log("month: ", month);
+  }}
+  onSelectedChange={(selected) => {
+    console.log("selected: ", selected);
+  }}
+  onTimeChange={(time) => {
+    console.log("time: ", time);
+  }}
 />
 ```
 
@@ -113,47 +116,46 @@ should work of the example project.
 
 ## Fundamentals
 
-| Property     |   Type   |  Default   | Description                                                                                          |
-|--------------|:--------:|:----------:|------------------------------------------------------------------------------------------------------|
-| mode         |  Modes   | Modes.date | change the picker's main component (options: Modes.date, Modes.time, Modes.monthYear, Modes.calendar |
-| currentDate  |   Date   | new Date() | set the current date which initially visible month                                                   |
-| selectedDate |  string  | undefined  | set the selected date which primarly value of date picker                                            |
-| onSelectedChange | function |  default   | set your own logic when the date is selected                                                         |
-| onTimeChange | function |  default   | set your own logic when the time is changed                                                          |
+| Property          |   Type   |  Default   | Description                                                                                          |
+| ----------------- | :------: | :--------: | ---------------------------------------------------------------------------------------------------- |
+| mode              |  Modes   | Modes.date | change the picker's main component (options: Modes.date, Modes.time, Modes.monthYear, Modes.calendar |
+| currentDate       |   Date   | new Date() | set the current date which initially visible month                                                   |
+| selectedDate      |  string  | undefined  | set the selected date which primarly value of date picker                                            |
+| onSelectedChange  | function |  default   | set your own logic when the date is selected                                                         |
+| onTimeChange      | function |  default   | set your own logic when the time is changed                                                          |
 | onMonthYearChange | function |  default   | set your own logic when the month year is selected                                                   |
 
 ## Customization (Optionals)
 
-| Property       |   Type    | Default | Description                                                            |
-|----------------|:---------:|:-------:|------------------------------------------------------------------------|
-| style          | ViewStyle | default | set or override the style object for the main container                |
-| minimumDate    |  string   | default | set the minimum selectable day from user                               |
-| maximumDate    |  string   | default | set the maximum selectable day from user                               |
-| selectorStartingYear        |  number   |    0    | change the minimum selectable year for year picker                     |
-| selectorEndingYear        |  number   |    0    | change the maximum selectable year for year picker                     |
-| disableDateChange     |  boolean  |  false  | disable the month & year from being changed                            |
+| Property             |   Type    | Default | Description                                             |
+| -------------------- | :-------: | :-----: | ------------------------------------------------------- |
+| style                | ViewStyle | default | set or override the style object for the main container |
+| minimumDate          |  string   | default | set the minimum selectable day from user                |
+| maximumDate          |  string   | default | set the maximum selectable day from user                |
+| selectorStartingYear |  number   |    0    | change the minimum selectable year for year picker      |
+| selectorEndingYear   |  number   |    0    | change the maximum selectable year for year picker      |
+| disableDateChange    |  boolean  |  false  | disable the month & year from being changed             |
 
 ## Customization for Options Prop
 
 ```js
-const defaultOptions: IOptions ={
-    backgroundColor: "#fff",
-    textHeaderColor: "#241523",
-    textDefaultColor: "#432d50",
-    selectedTextColor: "#fff",
-    mainColor: "#aa7ff9",
-    textSecondaryColor: "#967aa5",
-    borderColor: "rgba(53, 33, 52, 0.1)",
-    defaultFont: "System",
-    headerFont: "System",
-    textFontSize: 15,
-    textHeaderFontSize: 17,
-    headerAnimationDistance: 100,
-    daysAnimationDistance: 200,
-    daysStyle: {},
-    is24Hour: true,
+const defaultOptions: IOptions = {
+  backgroundColor: "#fff",
+  textHeaderColor: "#241523",
+  textDefaultColor: "#432d50",
+  selectedTextColor: "#fff",
+  mainColor: "#aa7ff9",
+  textSecondaryColor: "#967aa5",
+  borderColor: "rgba(53, 33, 52, 0.1)",
+  defaultFont: "System",
+  headerFont: "System",
+  textFontSize: 15,
+  textHeaderFontSize: 17,
+  headerAnimationDistance: 100,
+  daysAnimationDistance: 200,
+  daysStyle: {},
+  is24Hour: true,
 };
-
 ```
 
 ## Credits
@@ -169,7 +171,6 @@ Re-written whole structure with Typescript and enhanced with lots of ways with b
 - [ ] Better Documentation
 - [ ] Website
 - [ ] Write an article about the lib on Medium
-
 
 ## Author
 

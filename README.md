@@ -55,7 +55,7 @@ npm i react-native-time-date-picker
 ## Import
 
 ```jsx
-import TimeDatePicker from "react-native-time-date-picker";
+import { TimeDatePicker, Modes } from "react-native-time-date-picker";
 ```
 
 ## Fundamental Usage

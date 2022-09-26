@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { View, Text, Animated, StyleProp, ViewStyle } from "react-native";
 import { styles } from "./Calendar.style";
-import { Header, Days } from "..";
+import { Header } from "../Header/Header";
+import { Days } from "../Days/Days";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
 
 export interface CalendarProps {

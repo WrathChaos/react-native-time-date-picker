@@ -19,7 +19,6 @@ const Days = () => {
   const days = useMemo(() => utils.getMonthDays(mainState.activeDate));
 
   const onSelectDay = (date: number | undefined) => {
-    console.log("Date: ", date);
     setMainState({
       type: "set",
       selectedDate: date,

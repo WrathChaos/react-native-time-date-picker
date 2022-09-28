@@ -24,7 +24,6 @@ const Calendar: React.FC<CalendarProps> = ({ calendarStyle }) => {
   );
 
   useEffect(() => {
-    console.log("mainState.selectedDate", mainState.selectedDate);
     mainState.selectedDate && onSelectedChange(mainState.selectedDate);
   }, [mainState.selectedDate, onSelectedChange]);
 

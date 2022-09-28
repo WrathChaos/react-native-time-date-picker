@@ -176,7 +176,7 @@ Re-written whole structure with Typescript and enhanced with lots of ways with b
 ## Future Plans
 
 - [x] ~~LICENSE~~
-- [ ] Better integration with date timestamp (number) based
+- [x] ~~Better integration with date timestamp (number) based~~
 - [ ] Better Documentation
 - [ ] Website
 - [ ] Write an article about the lib on Medium

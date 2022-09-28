@@ -63,14 +63,23 @@ import { TimeDatePicker, Modes } from "react-native-time-date-picker";
 ```jsx
 <TimeDatePicker
   selectedDate={now}
-  onMonthYearChange={(month) => {
-    console.log("month: ", month);
+  mode={Modes.date}
+  onMonthYearChange={(month: number) => {
+    console.log("month: ", month); // 1643366100000
+    console.log("month formatted: ", moment(month).format("MM")); // 04
+    console.log("month formatted: ", moment(month).format("MMM")); // Apr
+    console.log("month formatted: ", moment(month).format("MMMM")); // April
   }}
-  onSelectedChange={(selected) => {
-    console.log("selected: ", selected);
+  onSelectedChange={(selected: number) => {
+    console.log("selected Date: ", selected); // 1649846100000
+    console.log(
+      "selected date formatted: ",
+      moment(selected).format("YYYY/MM/DD HH:mm"),
+    ); // 2022/04/13 13:35
   }}
-  onTimeChange={(time) => {
-    console.log("time: ", time);
+  onTimeChange={(time: number) => {
+    console.log("time: ", time); // 1643331840000
+    console.log("time formatted: ", moment(time).format("HH:mm")); // 04:04
   }}
 />
 ```

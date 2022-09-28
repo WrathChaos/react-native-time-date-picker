@@ -61,6 +61,8 @@ import { TimeDatePicker, Modes } from "react-native-time-date-picker";
 ## Fundamental Usage
 
 ```jsx
+const now = moment().valueOf();
+
 <TimeDatePicker
   selectedDate={now}
   mode={Modes.date}
@@ -81,12 +83,14 @@ import { TimeDatePicker, Modes } from "react-native-time-date-picker";
     console.log("time: ", time); // 1643331840000
     console.log("time formatted: ", moment(time).format("HH:mm")); // 04:04
   }}
-/>
+/>;
 ```
 
 ## Customization Example Usage
 
 ```jsx
+const now = moment().valueOf();
+
 <TimeDatePicker
   selectedDate={now}
   mode={Modes.time}
@@ -107,7 +111,7 @@ import { TimeDatePicker, Modes } from "react-native-time-date-picker";
   onTimeChange={(time) => {
     console.log("time: ", time);
   }}
-/>
+/>;
 ```
 
 ## Example Project 😍

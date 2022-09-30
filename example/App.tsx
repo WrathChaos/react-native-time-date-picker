@@ -1,12 +1,13 @@
 import React from "react";
 import { View } from "react-native";
 import moment from "moment";
-import { TimeDatePicker, Modes } from "react-native-time-date-picker";
+import { TimeDatePicker, Modes } from "./lib";
 
 interface AppProps {}
 
 const App: React.FC<AppProps> = () => {
   const now = moment().valueOf();
+
   return (
     <View
       style={{
@@ -18,6 +19,12 @@ const App: React.FC<AppProps> = () => {
       <TimeDatePicker
         selectedDate={now}
         mode={Modes.date}
+        onToggleTime={() => {
+          console.log("toggle time");
+        }}
+        onToggleMonth={() => {
+          console.log("toggle month");
+        }}
         onMonthYearChange={(month: number) => {
           console.log("month: ", month); // 1643366100000
           console.log("month formatted: ", moment(month).format("MM")); // 04

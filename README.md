@@ -148,6 +148,8 @@ should work of the example project.
 | selectorStartingYear |  number   |    0    | change the minimum selectable year for year picker      |
 | selectorEndingYear   |  number   |    0    | change the maximum selectable year for year picker      |
 | disableDateChange    |  boolean  |  false  | disable the month & year from being changed             |
+| onToggleTime         | function  | default | set your own logic when the header time is toggled      |
+| onToggleMonth        | function  | default | set your own logic when the header month is toggled     |
 
 ## Customization for Options Prop
 

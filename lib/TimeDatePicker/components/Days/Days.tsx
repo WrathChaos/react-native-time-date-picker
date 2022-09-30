@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { View, Text } from "react-native";
+import moment from "moment";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { styles } from "./Days.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
@@ -37,39 +38,45 @@ const Days = () => {
       style={[style.container, { flexDirection: "row" }]}
       onLayout={changeItemHeight}
     >
-      {days.map((day, index) => (
-        <View
-          key={index}
-          style={{
-            width: itemSize,
-            height: itemSize,
-          }}
-        >
-          {day && (
-            <RNBounceable
-              style={[
-                style.dayItem,
-                {
-                  borderRadius: itemSize / 2,
-                },
-                options.daysStyle,
-                mainState.selectedDate === day.date && style.dayItemSelected,
-              ]}
-              onPress={() => !day.disabled && onSelectDay(day.date)}
-            >
-              <Text
+      {days.map((day, index) => {
+        let isSameDay = false;
+        if (day?.date) {
+          isSameDay = moment(mainState.selectedDate).isSame(day.date, "day");
+        }
+        return (
+          <View
+            key={index}
+            style={{
+              width: itemSize,
+              height: itemSize,
+            }}
+          >
+            {day && (
+              <RNBounceable
                 style={[
-                  style.dayText,
-                  mainState.selectedDate === day.date && style.dayTextSelected,
-                  day.disabled && style.dayTextDisabled,
+                  style.dayItem,
+                  {
+                    borderRadius: itemSize / 2,
+                  },
+                  options.daysStyle,
+                  isSameDay && style.dayItemSelected,
                 ]}
+                onPress={() => !day.disabled && onSelectDay(day.date)}
               >
-                {day.dayString}
-              </Text>
-            </RNBounceable>
-          )}
-        </View>
-      ))}
+                <Text
+                  style={[
+                    style.dayText,
+                    isSameDay && style.dayTextSelected,
+                    day.disabled && style.dayTextDisabled,
+                  ]}
+                >
+                  {day.dayString}
+                </Text>
+              </RNBounceable>
+            )}
+          </View>
+        );
+      })}
     </View>
   );
 };

@@ -219,8 +219,6 @@ const SelectTime = () => {
     },
   ];
 
-  console.log("disableTimeCloseButton: ", disableTimeCloseButton);
-
   return show ? (
     <Animated.View style={containerStyle}>
       <TimeScroller

@@ -156,6 +156,7 @@ const SelectTime = () => {
     utils,
     minuteInterval = 1,
     mode,
+    disableTimeCloseButton = false,
     onTimeChange,
   } = useCalendar();
   const [mainState, setMainState] = state;
@@ -218,6 +219,8 @@ const SelectTime = () => {
     },
   ];
 
+  console.log("disableTimeCloseButton: ", disableTimeCloseButton);
+
   return show ? (
     <Animated.View style={containerStyle}>
       <TimeScroller
@@ -242,7 +245,7 @@ const SelectTime = () => {
         <RNBounceable style={style.button} onPress={selectTime}>
           <Text style={style.btnText}>{utils.config.timeSelect}</Text>
         </RNBounceable>
-        {mode !== Modes.time && (
+        {!disableTimeCloseButton && mode !== Modes.time && (
           <RNBounceable
             style={[style.button, style.cancelButton]}
             onPress={() =>

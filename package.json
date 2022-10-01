@@ -1,6 +1,6 @@
 {
   "name": "react-native-time-date-picker",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Easy to use time and date picker with lots of options for React Native.",
   "main": "./build/dist/index.js",
   "repository": "git@github.com:WrathChaos/react-native-time-date-picker.git",

@@ -36,6 +36,7 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/react": "^16.9.53",
     "@types/react-native": "^0.63.25",
+    "cpx": "^1.5.0",
     "eslint": "^7.11.0",
     "eslint-config-airbnb": "^18.2.0",
     "husky": "^7.0.0",
@@ -48,9 +49,9 @@
     "typescript": "^4.0.3"
   },
   "scripts": {
-    "build": "cd lib && tsc && cp ../package.json ../build/dist/ && Echo Build completed!",
+    "build": "cd lib && tsc && npm run copy:assets && npm run copy:package",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json",
+    "lint": "tslint -p tsconfig.json -c eslint.json",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
     "prettier": "cd lib && npx prettier --write . && git add .",
@@ -59,6 +60,8 @@
     "husky:commitlint": "npx husky add .husky/commit-msg 'npx --no-install commitlint --edit'",
     "husky:prettier": "npx husky set .husky/pre-commit 'npm run prettier'",
     "husky:lint": "npx husky add .husky/pre-commit 'npm run lint'",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "copy:assets": "cpx 'lib/local-assets/**' './build/dist/local-assets'",
+    "copy:package": "cpx '../package.json' '../build/dist/'"
   }
 }

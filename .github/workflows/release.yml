@@ -18,6 +18,7 @@ jobs:
           node-version: "lts/*"
       - name: Install dependencies
         run: npm install
+      - name: Install CI dependencies
         run: npm ci
       - name: Build Library
         run: npm run build --if-present

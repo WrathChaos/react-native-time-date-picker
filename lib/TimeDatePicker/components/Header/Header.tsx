@@ -28,14 +28,12 @@ const Header: React.FC<HeaderProps> = ({
   const [mainState, setMainState] = state;
   const style = styles(options);
   const [disableChange, setDisableChange] = useState(false);
-  const [
-    { lastDate, shownAnimation, hiddenAnimation },
-    changeMonthAnimation,
-  ] = utils.useMonthAnimation(
-    mainState.activeDate,
-    options.headerAnimationDistance || 100,
-    () => setDisableChange(false),
-  );
+  const [{ lastDate, shownAnimation, hiddenAnimation }, changeMonthAnimation] =
+    utils.useMonthAnimation(
+      mainState.activeDate,
+      options.headerAnimationDistance || 100,
+      () => setDisableChange(false),
+    );
   const prevDisable =
     disableDateChange ||
     (minimumDate &&

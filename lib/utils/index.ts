@@ -45,7 +45,7 @@ class utils {
     return date.format(this.config[formatName]);
   };
 
-  getFormattedDate = (date = new Date(), format = FORMATTED_DATE) =>
+  getFormattedDate = (date: number, format = FORMATTED_DATE) =>
     moment(date).format(format);
 
   getTime = (time: string) => this.getDate(time).format(this.config.timeFormat);
@@ -64,7 +64,8 @@ class utils {
     return "";
   };
 
-  getDate = (time?: string) => moment(time, this.config.selectedFormat);
+  getDate = (time?: string | number) =>
+    moment(time, this.config.selectedFormat);
 
   getMonthYearText = (time: string) => {
     const date = this.getDate(time);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Animated, I18nManager, Image, Text, View } from "react-native";
+import moment from "moment";
 import RNBounceable from "@freakycoder/react-native-bounceable";
 import { styles } from "./Header.style";
 import { defaultOptions, useCalendar } from "../../TimeDatePicker";
@@ -24,6 +25,7 @@ const Header: React.FC<HeaderProps> = ({
     minimumDate,
     maximumDate,
     mode,
+    selectedDate,
   } = useCalendar();
   const [mainState, setMainState] = state;
   const style = styles(options);
@@ -61,6 +63,8 @@ const Header: React.FC<HeaderProps> = ({
     });
     changeMonth(type);
   };
+
+  const dateFormat = options.is24Hour ? "HH:mm" : "hh:mm";
 
   return (
     <View
@@ -101,7 +105,9 @@ const Header: React.FC<HeaderProps> = ({
               }}
             >
               <Text style={style.headerText}>
-                {utils.getConvertedNumber(utils.getTime(mainState.activeDate))}
+                {moment(selectedDate || mainState.activeDate).format(
+                  dateFormat,
+                )}
               </Text>
             </RNBounceable>
           )}

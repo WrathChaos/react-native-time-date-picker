@@ -5848,10 +5848,10 @@
   "resolved" "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
   "version" "0.70.3"
 
-"react-native-time-date-picker@^0.1.11":
-  "integrity" "sha512-XFtHI6MPFh89+E1nicJaWO0ReupjLPvST0P84rAM10LnHr4hbGG6t/9OVXDNYnt44382XW2HN+LpbJShvMuWsA=="
-  "resolved" "https://registry.npmjs.org/react-native-time-date-picker/-/react-native-time-date-picker-0.1.11.tgz"
-  "version" "0.1.11"
+"react-native-time-date-picker@^1.0.1":
+  "integrity" "sha512-56Rrt7IYTDIRqs9Hddh4BT47SzbZMN/NTTAypkyI3TK+mfPH7NEV4+KdPQvMtq2OjE42GQKBsEcgcP5twuHc7Q=="
+  "resolved" "https://registry.npmjs.org/react-native-time-date-picker/-/react-native-time-date-picker-1.0.1.tgz"
+  "version" "1.0.1"
   dependencies:
     "@freakycoder/react-native-bounceable" ">= 1.0.3"
     "moment" ">= 2.29.4"

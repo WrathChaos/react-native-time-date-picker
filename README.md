@@ -137,6 +137,7 @@ should work of the example project.
 | onSelectedChange  | function |  default   | set your own logic when the date is selected                                                         |
 | onTimeChange      | function |  default   | set your own logic when the time is changed                                                          |
 | onMonthYearChange | function |  default   | set your own logic when the month year is selected                                                   |
+| onTimeCancelPress | function |  default   | set your own logic when the time select cancel button is pressed                                     |
 
 ## Customization (Optionals)
 

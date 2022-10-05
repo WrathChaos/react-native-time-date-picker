@@ -35,6 +35,7 @@ export interface ITimeDatePickerProps extends IMinMaxDates {
   onMonthYearChange: (monthYear: number) => void;
   onTimeChange: (time: number) => void;
   onDateChange?: (selectedDate?: number) => void;
+  onTimeCancelPress?: () => void;
   onToggleTime?: () => void;
   onToggleMonth?: () => void;
 }

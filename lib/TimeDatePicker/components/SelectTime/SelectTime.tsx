@@ -158,6 +158,7 @@ const SelectTime = () => {
     mode,
     disableTimeCloseButton = false,
     onTimeChange,
+    onTimeCancelPress,
   } = useCalendar();
   const [mainState, setMainState] = state;
   const minute = options.is24Hour ? 0 : 1;
@@ -246,11 +247,12 @@ const SelectTime = () => {
         {!disableTimeCloseButton && mode !== Modes.time && (
           <RNBounceable
             style={[style.button, style.cancelButton]}
-            onPress={() =>
+            onPress={() => {
               setMainState({
                 type: "toggleTime",
-              })
-            }
+              });
+              onTimeCancelPress?.();
+            }}
           >
             <Text style={style.btnText}>{utils.config.timeClose}</Text>
           </RNBounceable>

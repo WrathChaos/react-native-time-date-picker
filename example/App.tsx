@@ -42,6 +42,14 @@ const App: React.FC<AppProps> = () => {
           console.log("time: ", time); // 1643331840000
           console.log("time formatted: ", moment(time).format("HH:mm")); // 04:04
         }}
+        options={{
+          daysStyle: {
+            borderRadius: 16,
+            borderWidth: 0.5,
+            borderColor: "#f1f1f1",
+          },
+          is24Hour: false,
+        }}
       />
     </View>
   );

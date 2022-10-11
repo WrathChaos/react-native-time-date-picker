@@ -40,8 +40,11 @@ const Days = () => {
     >
       {days.map((day, index) => {
         let isSameDay = false;
+        let isToday = false;
+        const today = moment().valueOf();
         if (day?.date) {
           isSameDay = moment(mainState.selectedDate).isSame(day.date, "day");
+          isToday = moment(today).isSame(day.date, "day");
         }
         return (
           <View
@@ -59,6 +62,7 @@ const Days = () => {
                     borderRadius: itemSize / 2,
                   },
                   options.daysStyle,
+                  isToday && style.dayTodayItem,
                   isSameDay && style.dayItemSelected,
                 ]}
                 onPress={() => !day.disabled && onSelectDay(day.date)}

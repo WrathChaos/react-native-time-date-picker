@@ -16,6 +16,10 @@ export const styles = (theme: IOptions) =>
       alignItems: "center",
       justifyContent: "center",
     },
+    dayTodayItem: {
+      borderWidth: 2,
+      borderColor: theme.borderColor,
+    },
     dayItemSelected: {
       backgroundColor: theme.mainColor,
     },

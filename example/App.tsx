@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import moment from "moment";
-import { TimeDatePicker, Modes } from "react-native-time-date-picker";
+import { TimeDatePicker, Modes } from "./lib";
 
 interface AppProps {}
 
@@ -18,7 +18,7 @@ const App: React.FC<AppProps> = () => {
     >
       <TimeDatePicker
         selectedDate={now}
-        mode={Modes.date}
+        mode={Modes.time}
         onToggleTime={() => {
           console.log("toggle time");
         }}

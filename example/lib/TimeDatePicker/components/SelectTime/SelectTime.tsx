@@ -44,6 +44,7 @@ const TimeScroller = ({ title, data, onChange }) => {
 
   // @ts-ignore
   const renderItem = ({ item, index }) => {
+    console.log("Item: ", item);
     const makeAnimated = (a: number, b: number, c: number) => {
       return {
         inputRange: [...data.map((_: any, i: number) => i * itemSize)],
@@ -62,45 +63,38 @@ const TimeScroller = ({ title, data, onChange }) => {
       };
     };
 
+    const handlePress = () => {
+      if (title === utils.config.hour) {
+        // @ts-ignore
+        flatListRef.current.scrollToOffset({
+          animated: true,
+          offset: (item - (options.is24Hour ? 0 : 1)) * itemSize,
+        });
+      } else {
+        // @ts-ignore
+        flatListRef.current.scrollToOffset({
+          animated: true,
+          offset: item * itemSize,
+        });
+      }
+    };
+
+    const animationStyle = {
+      width: itemSize,
+      opacity: scrollAnimatedValue.interpolate(makeAnimated(1, 0.6, 0.2)),
+      transform: [
+        {
+          scale: scrollAnimatedValue.interpolate(makeAnimated(1.8, 0.9, 0.8)),
+        },
+        {
+          scaleX: I18nManager.isRTL ? -1 : 1,
+        },
+      ],
+    };
+
     return (
-      <RNBounceable
-        onPress={() => {
-          if (title === utils.config.hour) {
-            // @ts-ignore
-            flatListRef.current.scrollToOffset({
-              animated: true,
-              offset: (item - (options.is24Hour ? 0 : 1)) * itemSize,
-            });
-          } else {
-            // @ts-ignore
-            flatListRef.current.scrollToOffset({
-              animated: true,
-              offset: item * itemSize,
-            });
-          }
-        }}
-      >
-        <Animated.View
-          style={[
-            {
-              width: itemSize,
-              opacity: scrollAnimatedValue.interpolate(
-                makeAnimated(1, 0.6, 0.2),
-              ),
-              transform: [
-                {
-                  scale: scrollAnimatedValue.interpolate(
-                    makeAnimated(1.8, 0.9, 0.8),
-                  ),
-                },
-                {
-                  scaleX: I18nManager.isRTL ? -1 : 1,
-                },
-              ],
-            },
-            style.listItem,
-          ]}
-        >
+      <RNBounceable onPress={handlePress}>
+        <Animated.View style={[animationStyle, style.listItem]}>
           <Text style={style.listItemText}>
             {utils.getConvertedNumber(
               String(item).length === 1 ? "0" + String(item) : String(item),

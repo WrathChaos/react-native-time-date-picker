@@ -11,7 +11,6 @@ export const styles = (theme: IOptions) =>
       right: 0,
       backgroundColor: theme.backgroundColor,
       borderRadius: 10,
-      flexDirection: "column",
       justifyContent: "center",
       zIndex: 999,
     },
@@ -25,6 +24,7 @@ export const styles = (theme: IOptions) =>
       color: theme.mainColor,
       fontFamily: theme.headerFont,
       marginBottom: 12,
+      textAlign: "center",
     },
     listItem: {
       height: 60,
@@ -44,9 +44,8 @@ export const styles = (theme: IOptions) =>
     button: {
       paddingVertical: 10,
       paddingHorizontal: 25,
-      borderRadius: 8,
+      borderRadius: 12,
       backgroundColor: theme.mainColor,
-      margin: 8,
     },
     btnText: {
       fontSize: theme.textFontSize,

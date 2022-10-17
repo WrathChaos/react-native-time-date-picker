@@ -1,55 +1,179 @@
+// import React, { useState } from "react";
+// import { StyleSheet, Text, View } from "react-native";
+// import ValuePicker from "react-native-picker-horizontal";
+//
+// export default function App() {
+//   const [selected, setSelected] = useState(0);
+//
+//   const Items = Array.from(Array(60).keys());
+//
+//   const renderItem = (item: number) => (
+//     <Text
+//       style={{
+//         width: 50,
+//         textAlign: "center",
+//         justifyContent: "center",
+//         alignItems: "center",
+//       }}
+//     >
+//       {item}
+//     </Text>
+//   );
+//
+//   const defaultExample = (
+//     <ValuePicker
+//       style={styles.container}
+//       data={Items}
+//       mark={null}
+//       renderItem={renderItem}
+//       itemWidth={50}
+//       initialIndex={1}
+//       onChange={(index: number) => setSelected(index)}
+//     />
+//   );
+//
+//   const customExample1 = (
+//     <ValuePicker
+//       style={styles.container}
+//       data={Items}
+//       renderItem={(item: number) => (
+//         <Text
+//           style={{
+//             width: 70,
+//             textAlign: "center",
+//             justifyContent: "center",
+//             alignItems: "center",
+//           }}
+//         >
+//           {item}
+//         </Text>
+//       )}
+//       itemWidth={70}
+//       onChange={(index: number) => setSelected(index)}
+//       mark={null}
+//       interpolateScale={(index: number, itemWidth: number) => ({
+//         inputRange: [
+//           itemWidth * (index - 1),
+//           itemWidth * index,
+//           itemWidth * (index + 1),
+//         ],
+//         outputRange: [3.5, 6, 3.5],
+//       })}
+//       interpolateOpacity={(index: number, itemWidth: number) => ({
+//         inputRange: [
+//           itemWidth * (index - 1),
+//           itemWidth * index,
+//           itemWidth * (index + 1),
+//         ],
+//         outputRange: [0.65, 1, 0.65],
+//       })}
+//     />
+//   );
+//
+//   const customExample2 = (
+//     <ValuePicker
+//       style={styles.container}
+//       data={Items}
+//       renderItem={(item: number) => (
+//         <Text
+//           style={{
+//             width: 40,
+//             textAlign: "center",
+//             height: 70,
+//           }}
+//         >
+//           {item}
+//         </Text>
+//       )}
+//       itemWidth={40}
+//       onChange={(index: number) => setSelected(index)}
+//       mark={
+//         <Text
+//           style={{
+//             color: "black",
+//             fontWeight: "bold",
+//             paddingBottom: 30,
+//           }}
+//         >
+//           ▲
+//         </Text>
+//       }
+//       interpolateScale={(index: number, itemWidth: number) => ({
+//         inputRange: [
+//           itemWidth * (index - 3),
+//           itemWidth * (index - 2),
+//           itemWidth * (index - 1),
+//           itemWidth * index,
+//           itemWidth * (index + 1),
+//           itemWidth * (index + 2),
+//           itemWidth * (index + 3),
+//         ],
+//         outputRange: [0.7, 0.7, 1.4, 2, 1.4, 0.7, 0.7],
+//       })}
+//       interpolateOpacity={(index: number, itemWidth: number) => ({
+//         inputRange: [
+//           itemWidth * (index - 2),
+//           itemWidth * (index - 1),
+//           itemWidth * index,
+//           itemWidth * (index + 1),
+//           itemWidth * (index + 2),
+//         ],
+//         outputRange: [0.7, 0.9, 1, 0.9, 0.7],
+//       })}
+//     />
+//   );
+//
+//   return (
+//     <View style={styles.container}>
+//       <View style={styles.container} />
+//       <View style={styles.container}>
+//         <Text style={{ fontSize: 50, fontWeight: "bold" }}>{selected}</Text>
+//       </View>
+//       <View style={styles.br} />
+//       {defaultExample}
+//       <View style={styles.br} />
+//       {customExample1}
+//       <View style={styles.br} />
+//       {customExample2}
+//       <View style={styles.br} />
+//       <View style={styles.container} />
+//     </View>
+//   );
+// }
+//
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   br: {
+//     borderBottomColor: "#ebebeb",
+//     borderBottomWidth: 1,
+//     width: "100%",
+//   },
+// });
+
 import React from "react";
-import { View } from "react-native";
-import moment from "moment";
-import { TimeDatePicker, Modes } from "./lib";
+import { View, StyleProp, ViewStyle } from "react-native";
+import { Modes, TimeDatePicker } from "./lib";
 
-interface AppProps {}
+type CustomStyleProp = StyleProp<ViewStyle> | Array<StyleProp<ViewStyle>>;
 
-const App: React.FC<AppProps> = () => {
-  const now = moment().valueOf();
+interface AppProps {
+  style?: CustomStyleProp;
+}
 
+const App: React.FC<AppProps> = ({ style }) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TimeDatePicker
-        selectedDate={now}
-        mode={Modes.time}
-        onToggleTime={() => {
-          console.log("toggle time");
-        }}
-        onToggleMonth={() => {
-          console.log("toggle month");
-        }}
-        onMonthYearChange={(month: number) => {
-          console.log("month: ", month); // 1643366100000
-          console.log("month formatted: ", moment(month).format("MM")); // 04
-          console.log("month formatted: ", moment(month).format("MMM")); // Apr
-          console.log("month formatted: ", moment(month).format("MMMM")); // April
-        }}
-        onSelectedChange={(selected: number) => {
-          console.log("selected Date: ", selected); // 1649846100000
-          console.log(
-            "selected date formatted: ",
-            moment(selected).format("YYYY/MM/DD HH:mm"),
-          ); // 2022/04/13 13:35
-        }}
-        onTimeChange={(time: number) => {
-          console.log("time: ", time); // 1643331840000
-          console.log("time formatted: ", moment(time).format("HH:mm")); // 04:04
-        }}
-        options={{
-          daysStyle: {
-            borderRadius: 16,
-            borderWidth: 0.5,
-            borderColor: "#f1f1f1",
-          },
-          is24Hour: false,
-        }}
+        mode={Modes.date}
+        onSelectedChange={() => {}}
+        onMonthYearChange={() => {}}
+        onTimeChange={() => {}}
+        selectedDate={1666050309000}
       />
     </View>
   );

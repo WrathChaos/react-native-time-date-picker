@@ -33,6 +33,9 @@
 - [Localization](./docs/translations.md)
 - [Localization Contribution](./docs/contributions/translations.md)
 
+#Announcement
+Huge Version 2 is under development 🌟 More to come!
+
 # Installation
 
 Add the dependency:
